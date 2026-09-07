@@ -1,0 +1,6 @@
+{
+  "name": "HydroCrop Monitor",
+  "description": "Shift handover and daily facility monitoring dashboard for vertical farm operations technicians to monitor pH and nutrient levels across 12 automated hydro bays and flag abnormal ones.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
