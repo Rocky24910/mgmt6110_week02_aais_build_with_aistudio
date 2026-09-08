@@ -1,7 +1,7 @@
 # PROMPTS.md - [HydroCrop Monitor]
 **Student:** [ZHIKUN ZHU] · **Course:** MGMT 6110 · **Problem Set 1**
 **User sentence:** A [vertical farm operations technician] opens this screen during shift handover to [monitor real-time pH and nutrient (EC) levels across 12 automated hydro bays, inspect and flag abnormal bays with technician notes, and complete the shift handover], and knows it worked when [the flagged bay status updates seamlessly and an automated handover summary report is generated for the incoming team].
-**Live link:** [your Vercel production URL, the short one, tested in a private window]
+**Live link:** [mgmt6110week02aaisbuildwithaistudio.vercel.app]
 
 ---
 
