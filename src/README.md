@@ -1,6 +1,7 @@
 # HydroCrop Monitor - Vertical Farm Shift Handover Tool
 
-**Live Application Link:** [https://mgmt6110week02aaisbuildwithaistudio.vercel.app](https://mgmt6110week02aaisbuildwithaistudio.vercel.app)
+**Student:** ZHIKUN ZHU  
+**Live Application Link:** [mgmt6110week02aaisbuildwithaistudio.vercel.app](https://mgmt6110week02aaisbuildwithaistudio.vercel.app)
 
 ---
 
@@ -32,7 +33,7 @@ This application consists of 3 integrated screens designed to support the comple
 ---
 
 ## Repository File Structure
-* `README.md`: Project declaration, user sentence, and architecture overview.
+* `README.md`: Project declaration, user sentence, student details, and architecture overview.
 * `PROMPTS.md`: Complete log of prompt iterations and AI interaction history.
 * `REFLECTION.md`: Detailed reflection report answering Q1 to Q5.
 * `mockData.js`: Centralized mock dataset containing 12 hydroponic bay parameters (One Data File Rule).
