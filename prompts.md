@@ -875,3 +875,115 @@ hard-coded values and was successfully retrieving live external environmental
 data from the real upstream provider.
 
 ---
+
+## Prompt 6 — Mobile responsiveness correction
+```
+ROLE:
+You are a senior front-end developer working in my existing HydroCrop Monitor
+project. Do not redesign or rebuild the application.
+
+GOAL:
+Fix ONLY the responsive/mobile layout of the existing application.
+
+The desktop version is currently working and visually acceptable. Preserve its
+current desktop appearance, information hierarchy, colors, components, data,
+backend integration, and interactions.
+
+The current problem is that the application was originally requested to be
+mobile-first, but real small-screen inspection showed that the layout becomes
+crowded, compressed and difficult to use.
+
+Make all three existing screens properly usable on narrow mobile screens.
+
+OUTPUT:
+Update only the existing front-end layout/styling files required for responsive
+behavior.
+
+At mobile widths:
+
+1. Prevent unintended horizontal page overflow.
+2. Prevent text, badges, buttons and cards from overlapping.
+3. Allow navigation and action groups to wrap or stack where necessary.
+4. Stack multi-column KPI/card layouts into readable mobile layouts.
+5. Keep buttons touch-friendly.
+6. Keep forms usable without horizontal scrolling.
+7. Allow long labels to wrap instead of being clipped.
+
+For Screen 1:
+- Preserve the existing Live External Conditions component.
+- Temperature and Relative Humidity cards may stack vertically.
+- Bay cards must remain readable.
+- Filters and search controls may wrap or stack.
+
+For Screen 2:
+- Keep the existing inspection workflow unchanged.
+- Make forms, selectors, logs and action areas fit mobile widths.
+
+For Screen 3:
+- Make the existing content responsive.
+- Do NOT change the relative placement of Print / Save PDF and
+  Confirm Shift Handover yet. That is a separate issue for a later prompt.
+
+Verify the layout at approximately:
+- 375px width
+- 430px width
+- desktop width
+
+When finished, report:
+1. Exactly which files you modified.
+2. What responsive behavior you added.
+3. What specifically changes at 375px and 430px.
+4. Whether desktop behavior changed.
+5. Anything you could not verify.
+
+GUARDRAILS:
+Do not:
+- redesign the desktop application;
+- change the color palette;
+- change wording;
+- change business logic;
+- change mock hydro-bay data;
+- change API code;
+- change /api/environment;
+- change /api/health;
+- change Live External Conditions data logic;
+- add or remove product features;
+- change flagging behavior;
+- change technician notes;
+- change handover behavior;
+- add packages;
+- add a database;
+- add authentication.
+
+Do not use fixed desktop widths that cause horizontal overflow on phones.
+
+Use the existing styling system and existing project dependencies.
+
+CONTEXT:
+This is my existing HydroCrop Monitor project from MGMT 6110 Problem Set 1,
+now being extended for Problem Set 2.
+
+The back-end integration has already been completed and independently verified
+on the deployed Vercel application.
+
+Both production endpoints are working:
+- /api/health
+- /api/environment
+
+The Live External Conditions section on Screen 1 is already working and must
+remain unchanged in functionality.
+
+Real-device review showed that the current desktop interface does not adapt well
+to smartphone-sized screens, despite the original Problem Set 1 prompt asking
+for a mobile-first interface.
+
+This prompt addresses ONLY that unresolved responsive-layout issue.
+```
+
+**What came back:**
+
+[Waiting for Google AI Studio response]
+
+**What I accepted / rejected / changed and why:**
+
+[To be completed after real mobile verification]
