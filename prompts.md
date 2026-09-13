@@ -827,4 +827,26 @@ I intentionally did not fix mobile responsiveness or the Screen 3 action-button
 layout in this prompt. Those are separate front-end issues and will be addressed
 only after the back end has been independently verified.
 ```
+
+### Deployment verification
+
+After pushing the revised implementation to GitHub and deploying through Vercel,
+I tested the production health endpoint before opening the main application.
+
+GET:
+https://mgmt6110week02aaisbuildwithaistudio.vercel.app/api/health
+
+Result:
+HTTP 200
+
+Returned:
+- credentialRequired: false
+- airTemperatureUpstreamAnswered: true
+- airTemperatureUpstreamStatus: 200
+- relativeHumidityUpstreamAnswered: true
+- relativeHumidityUpstreamStatus: 200
+
+This confirmed that both external data.gov.sg upstream services were reachable
+from the deployed Vercel back end.
+
 ---
