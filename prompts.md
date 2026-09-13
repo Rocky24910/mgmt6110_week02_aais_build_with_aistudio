@@ -158,3 +158,267 @@ I will label these values as external Singapore environmental conditions rather 
 
 I also noticed that the two readings can have different timestamps, so the product should not imply that both values were observed at exactly the same moment.
 
+---
+
+## Prompt 4 — Problem Set 2 backend integration
+
+[ROLE:
+You are a senior full-stack engineer extending my EXISTING React application,
+"HydroCrop Monitor". This is an existing working product from Problem Set 1.
+Do not rebuild it or replace its current architecture.
+
+GOAL:
+Add one real back-end data integration to the existing product.
+
+The application currently contains prototype/mock hydro-bay sensor data for
+12 hydroponic bays. Do NOT replace those pH, EC, water-temperature, reservoir,
+flow, flagging, technician-note, or handover functions with public data.
+
+Instead, add a clearly separate "Live External Conditions" section to Screen 1
+using real Singapore environmental data from data.gov.sg / NEA.
+
+The external conditions must never be described as hydro-bay sensor readings
+or indoor farm conditions.
+
+--------------------------------------------------
+REAL DATA SOURCE — VERIFIED MANUALLY BEFORE THIS PROMPT
+--------------------------------------------------
+
+I manually tested both endpoints in Bruno and confirmed that they return
+successful JSON responses without an API key.
+
+Air temperature:
+GET https://api-open.data.gov.sg/v2/real-time/api/air-temperature
+
+Relative humidity:
+GET https://api-open.data.gov.sg/v2/real-time/api/relative-humidity
+
+Use station:
+S111 — Scotts Road
+
+Verified real response examples:
+
+AIR TEMPERATURE:
+{
+  "code": 0,
+  "data": {
+    "readings": [
+      {
+        "timestamp": "2026-09-13T16:48:00+08:00",
+        "data": [
+          {
+            "stationId": "S111",
+            "value": 31.2
+          }
+        ]
+      }
+    ],
+    "readingUnit": "deg C"
+  },
+  "errorMsg": ""
+}
+
+RELATIVE HUMIDITY:
+{
+  "code": 0,
+  "data": {
+    "readings": [
+      {
+        "timestamp": "2026-09-13T16:53:00+08:00",
+        "data": [
+          {
+            "stationId": "S111",
+            "value": 64.3
+          }
+        ]
+      }
+    ],
+    "readingUnit": "percentage"
+  },
+  "errorMsg": ""
+}
+
+Important:
+The timestamps from the two endpoints may differ.
+Do not pretend that temperature and humidity were measured at exactly
+the same time.
+
+--------------------------------------------------
+BACK-END REQUIREMENTS
+--------------------------------------------------
+
+Create:
+
+1. /api/environment
+
+This server-side endpoint must fetch BOTH data.gov.sg endpoints.
+
+Find stationId "S111" in each response.
+
+Return only the fields the front end needs, in clean JSON similar to:
+
+{
+  "stationId": "S111",
+  "station": "Scotts Road",
+  "temperature": 31.2,
+  "temperatureUnit": "deg C",
+  "temperatureObservedAt": "...",
+  "humidity": 64.3,
+  "humidityUnit": "percentage",
+  "humidityObservedAt": "...",
+  "source": "NEA / data.gov.sg"
+}
+
+Do not hard-code the temperature or humidity values.
+They must come from the live upstream responses.
+
+Check response.ok before attempting to parse/use the response.
+
+If either upstream service returns a non-2xx response, return a useful
+JSON error response rather than crashing.
+
+If station S111 is absent from a successful response, treat that as an
+empty-data state rather than inventing a value.
+
+Use sensible Cache-Control headers because these readings do not need
+to be fetched again on every browser request.
+
+2. /api/health
+
+Create a health endpoint that checks whether the environmental upstream
+services are reachable.
+
+This API does NOT require an API key.
+
+Do not invent a credential or environment variable.
+
+The health response should clearly report:
+- service status
+- credentialRequired: false
+- temperature upstream status
+- humidity upstream status
+- checkedAt
+
+It must return something useful when an upstream service is unavailable.
+
+--------------------------------------------------
+FRONT-END REQUIREMENTS
+--------------------------------------------------
+
+On Screen 1 only, add a compact section titled:
+
+"Live External Conditions"
+
+Display:
+- Outdoor Temperature
+- Relative Humidity
+- Station: Scotts Road
+- Last observation time(s)
+- Source: NEA / data.gov.sg
+
+The source attribution should be visible.
+
+Clearly label these values as EXTERNAL Singapore environmental
+conditions.
+
+Do NOT describe them as:
+- hydro-bay temperature
+- farm sensor data
+- indoor conditions
+- telemetry from the 12 bays
+
+The existing hydro-bay values remain prototype/mock facility data.
+
+Use these four distinct user-facing states:
+
+LOADING:
+"Loading latest Singapore external conditions…"
+
+EMPTY DATA:
+"No recent external readings are available from this station."
+
+UPSTREAM ERROR:
+"External conditions are temporarily unavailable from data.gov.sg."
+
+UNREACHABLE:
+"The environmental data service cannot be reached right now. Facility
+sensor monitoring is unaffected."
+
+Do not replace these four states with one generic spinner or one generic
+error message.
+
+--------------------------------------------------
+FILE / DEPLOYMENT REQUIREMENTS
+--------------------------------------------------
+
+The API functions must be placed in:
+
+api/
+
+at the PROJECT ROOT, as siblings of package.json.
+
+Do NOT put the API functions inside src/.
+
+Make sure the project remains compatible with Vercel deployment.
+
+If package.json needs "type": "module" for the server functions, add it
+only if appropriate for the existing project and explain the change.
+
+Do not add unnecessary npm packages.
+
+--------------------------------------------------
+GUARDRAILS
+--------------------------------------------------
+
+Change nothing unrelated to this integration.
+
+DO NOT:
+- redesign the existing application
+- change the overall colour palette
+- fix mobile responsiveness yet
+- change the Screen 3 button layout yet
+- remove the existing 12 hydro bays
+- change the existing flagging workflow
+- change technician notes
+- change the handover workflow
+- add authentication
+- add a database
+- add a notification service
+- call an LLM API
+- invent an API key
+- expose or create credentials
+- rewrite working screens
+
+This is one controlled back-end integration only.
+
+--------------------------------------------------
+BEFORE YOU FINISH
+--------------------------------------------------
+
+Check that:
+
+1. /api/environment exists at the project root.
+2. /api/health exists at the project root.
+3. The front end calls my own /api/environment endpoint, NOT data.gov.sg
+   directly from browser code.
+4. Temperature and humidity are not hard-coded.
+5. Station S111 is selected from the real response.
+6. The four different UI states exist.
+7. Existing hydro-bay interactions still work.
+8. No unrelated UI changes were made.
+
+When complete, tell me:
+
+A. Exactly which files you created.
+B. Exactly which existing files you modified.
+C. What each change does.
+D. Whether you encountered any assumption or limitation.
+E. What I should test manually before deploying.
+
+Do not make any additional changes after giving me that report.]
+
+**What came back:**
+[先留空]
+
+**What I accepted / rejected / changed and why:**
+[先留空]
