@@ -113,4 +113,48 @@ Decision:
 Reframe this wording unless a real notification service is implemented later.
 
 ---
+## Step 2 — Manual API verification before prompting
+
+Before asking the AI agent to write any back-end code, I called the proposed public API manually in Bruno and inspected the real response structure.
+
+### Test 1 — Air temperature
+
+GET:
+https://api-open.data.gov.sg/v2/real-time/api/air-temperature
+
+Result:
+Successful response.
+
+Relevant structure:
+- data.stations
+- data.readings[0].timestamp
+- data.readings[0].data
+- readingUnit
+
+Example verified station:
+- Station ID: S111
+- Station: Scotts Road
+- Temperature: 31.2 °C
+- Observed at: 2026-09-13T16:48:00+08:00
+
+### Test 2 — Relative humidity
+
+GET:
+https://api-open.data.gov.sg/v2/real-time/api/relative-humidity
+
+Result:
+Successful response.
+
+Example verified station:
+- Station ID: S111
+- Station: Scotts Road
+- Relative humidity: 64.3%
+- Observed at: 2026-09-13T16:53:00+08:00
+
+### Decision
+Both endpoints use the same station ID, so the back end can combine temperature and humidity from S111.
+
+I will label these values as external Singapore environmental conditions rather than hydro-bay conditions.
+
+I also noticed that the two readings can have different timestamps, so the product should not imply that both values were observed at exactly the same moment.
 
