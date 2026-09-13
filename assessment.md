@@ -33,3 +33,9 @@ To be completed after testing the deployed product.
 ### Q5 — Which decisions did I keep, and should I have kept more or fewer?
 
 ### Q6 — What would this mean for a team of thirty?
+
+---
+
+Working note:
+The back end was independently verified on the deployed Vercel URL.
+Both `/api/health` and `/api/environment` returned successful production responses.
