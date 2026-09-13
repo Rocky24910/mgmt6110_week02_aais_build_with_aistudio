@@ -240,34 +240,40 @@ export const BayCard: React.FC<BayCardProps> = ({ bay, onInspect }) => {
       </div>
 
       {/* Action CTA Button */}
-      <div className="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800">
+      <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800">
         <button
           id={`inspect-bay-btn-${bay.id.toLowerCase()}`}
           onClick={() => onInspect(bay.id)}
-          className={`w-full py-2.5 px-3 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 transition-all cursor-pointer min-h-[44px] ${
+          className={`w-full py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-between gap-2 transition-all active:scale-[0.99] cursor-pointer min-h-[44px] ${
             bay.status === 'Flagged'
-              ? 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm'
+              ? 'bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white shadow-sm'
               : bay.status === 'Critical' || bay.status === 'Warning'
-              ? 'bg-amber-600 hover:bg-amber-700 text-white shadow-sm'
-              : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200'
+              ? 'bg-amber-600 hover:bg-amber-500 active:bg-amber-700 text-white shadow-sm'
+              : 'bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 active:bg-slate-300 dark:active:bg-slate-600 text-slate-800 dark:text-slate-200'
           }`}
         >
           {bay.status === 'Flagged' ? (
             <>
-              <Flag className="w-3.5 h-3.5 fill-current" />
-              Manage Flag & Notes
-              <ChevronRight className="w-4 h-4 ml-auto" />
+              <div className="flex items-center gap-2">
+                <Flag className="w-3.5 h-3.5 fill-current flex-shrink-0" />
+                <span>Manage Flag & Notes</span>
+              </div>
+              <ChevronRight className="w-4 h-4 flex-shrink-0 opacity-80" />
             </>
           ) : bay.status === 'Critical' || bay.status === 'Warning' ? (
             <>
-              <AlertTriangle className="w-3.5 h-3.5" />
-              Inspect & Flag Bay
-              <ChevronRight className="w-4 h-4 ml-auto" />
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
+                <span>Inspect & Flag Bay</span>
+              </div>
+              <ChevronRight className="w-4 h-4 flex-shrink-0 opacity-80" />
             </>
           ) : (
             <>
-              Inspect Diagnostics
-              <ChevronRight className="w-4 h-4 ml-auto text-slate-400" />
+              <div className="flex items-center gap-2">
+                <span>Inspect Diagnostics</span>
+              </div>
+              <ChevronRight className="w-4 h-4 flex-shrink-0 text-slate-400 dark:text-slate-500" />
             </>
           )}
         </button>

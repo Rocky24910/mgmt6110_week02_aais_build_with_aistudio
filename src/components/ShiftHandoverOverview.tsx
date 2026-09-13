@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { HydroBay, ShiftInfo } from '../types';
 import { BayCard } from './BayCard';
+import { LiveExternalConditions } from './LiveExternalConditions';
 import { 
   CheckCircle2, 
   AlertTriangle, 
@@ -95,24 +96,24 @@ export const ShiftHandoverOverview: React.FC<ShiftHandoverOverviewProps> = ({
             </p>
           </div>
 
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 flex-shrink-0 w-full sm:w-auto">
             {firstAbnormal && (
               <button
                 id="cta-inspect-first-abnormal"
                 onClick={() => onInspectBay(firstAbnormal.id)}
-                className="px-3.5 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 flex items-center gap-1.5 transition-all shadow cursor-pointer min-h-[44px]"
+                className="px-4 py-2.5 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 active:bg-amber-600 text-slate-950 flex items-center justify-center gap-2 transition-all shadow-sm cursor-pointer min-h-[44px] whitespace-nowrap"
               >
-                <AlertTriangle className="w-4 h-4 text-slate-950 fill-amber-300" />
+                <AlertTriangle className="w-4 h-4 text-slate-950 fill-amber-300 flex-shrink-0" />
                 <span>Inspect Abnormal ({firstAbnormal.id})</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-3.5 h-3.5 flex-shrink-0" />
               </button>
             )}
             <button
               id="cta-review-handover-summary"
               onClick={onSwitchToHandover}
-              className="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white flex items-center gap-1.5 transition-all shadow cursor-pointer min-h-[44px]"
+              className="px-4 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white flex items-center justify-center gap-2 transition-all shadow-sm cursor-pointer min-h-[44px] whitespace-nowrap"
             >
-              <Flag className="w-4 h-4" />
+              <Flag className="w-4 h-4 flex-shrink-0" />
               <span>Review Handover Logs ({flaggedBays})</span>
             </button>
           </div>
@@ -144,8 +145,11 @@ export const ShiftHandoverOverview: React.FC<ShiftHandoverOverviewProps> = ({
 
         {/* Card 2: Optimal Bays */}
         <div 
+          role="button"
+          tabIndex={0}
           onClick={() => setFilter('optimal')}
-          className={`bg-white dark:bg-slate-900 rounded-xl p-3.5 sm:p-4 border shadow-sm flex flex-col justify-between cursor-pointer transition-all hover:border-emerald-400 ${
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFilter('optimal'); } }}
+          className={`bg-white dark:bg-slate-900 rounded-xl p-3.5 sm:p-4 border shadow-sm flex flex-col justify-between cursor-pointer transition-all hover:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 ${
             filter === 'optimal' ? 'ring-2 ring-emerald-500 border-emerald-500' : 'border-slate-200 dark:border-slate-800'
           }`}
         >
@@ -171,8 +175,11 @@ export const ShiftHandoverOverview: React.FC<ShiftHandoverOverviewProps> = ({
 
         {/* Card 3: Action Needed / Out of Range */}
         <div 
+          role="button"
+          tabIndex={0}
           onClick={() => setFilter('action_needed')}
-          className={`bg-white dark:bg-slate-900 rounded-xl p-3.5 sm:p-4 border shadow-sm flex flex-col justify-between cursor-pointer transition-all hover:border-amber-400 ${
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFilter('action_needed'); } }}
+          className={`bg-white dark:bg-slate-900 rounded-xl p-3.5 sm:p-4 border shadow-sm flex flex-col justify-between cursor-pointer transition-all hover:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-500 ${
             filter === 'action_needed' ? 'ring-2 ring-amber-500 border-amber-500' : 'border-slate-200 dark:border-slate-800'
           }`}
         >
@@ -195,8 +202,11 @@ export const ShiftHandoverOverview: React.FC<ShiftHandoverOverviewProps> = ({
 
         {/* Card 4: Flagged for Shift */}
         <div 
+          role="button"
+          tabIndex={0}
           onClick={() => setFilter('flagged')}
-          className={`bg-white dark:bg-slate-900 rounded-xl p-3.5 sm:p-4 border shadow-sm flex flex-col justify-between cursor-pointer transition-all hover:border-indigo-400 ${
+          onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFilter('flagged'); } }}
+          className={`bg-white dark:bg-slate-900 rounded-xl p-3.5 sm:p-4 border shadow-sm flex flex-col justify-between cursor-pointer transition-all hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 ${
             filter === 'flagged' ? 'ring-2 ring-indigo-500 border-indigo-500' : 'border-slate-200 dark:border-slate-800'
           }`}
         >
@@ -219,77 +229,108 @@ export const ShiftHandoverOverview: React.FC<ShiftHandoverOverviewProps> = ({
         </div>
       </div>
 
+      {/* Live External Conditions (Screen 1 Integration - NEA / data.gov.sg S111) */}
+      <LiveExternalConditions />
+
       {/* Filters & Search Control Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white dark:bg-slate-900 p-3 sm:p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-        {/* Filter Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
+      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 bg-white dark:bg-slate-900 p-2.5 sm:p-3 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        {/* Filter Segmented Control Button Group */}
+        <div className="grid grid-cols-2 sm:flex sm:flex-wrap lg:flex-nowrap items-center gap-1.5 p-1 bg-slate-100/90 dark:bg-slate-800/80 rounded-xl border border-slate-200/80 dark:border-slate-700/60 w-full lg:w-auto">
           <button
             id="filter-btn-all"
             onClick={() => setFilter('all')}
-            className={`px-3 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-colors cursor-pointer min-h-[44px] flex items-center gap-1 ${
+            className={`px-3.5 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-all cursor-pointer min-h-[44px] flex items-center justify-center gap-2 ${
               filter === 'all'
                 ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 shadow-sm'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-700/60'
             }`}
           >
-            All Bays ({totalBays})
+            <span>All Bays</span>
+            <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold ${
+              filter === 'all'
+                ? 'bg-white/20 dark:bg-slate-900/20 text-white dark:text-slate-900'
+                : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-400'
+            }`}>
+              {totalBays}
+            </span>
           </button>
 
           <button
             id="filter-btn-action"
             onClick={() => setFilter('action_needed')}
-            className={`px-3 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-colors cursor-pointer min-h-[44px] flex items-center gap-1 ${
+            className={`px-3.5 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-all cursor-pointer min-h-[44px] flex items-center justify-center gap-2 ${
               filter === 'action_needed'
                 ? 'bg-amber-600 text-white shadow-sm'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-700/60'
             }`}
           >
-            <AlertTriangle className="w-3.5 h-3.5" />
-            Action Needed ({abnormalCount + flaggedBays})
+            <AlertTriangle className="w-3.5 h-3.5 flex-shrink-0" />
+            <span>Action Needed</span>
+            <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold ${
+              filter === 'action_needed'
+                ? 'bg-amber-700 text-white'
+                : 'bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300'
+            }`}>
+              {abnormalCount + flaggedBays}
+            </span>
           </button>
 
           <button
             id="filter-btn-flagged"
             onClick={() => setFilter('flagged')}
-            className={`px-3 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-colors cursor-pointer min-h-[44px] flex items-center gap-1 ${
+            className={`px-3.5 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-all cursor-pointer min-h-[44px] flex items-center justify-center gap-2 ${
               filter === 'flagged'
                 ? 'bg-indigo-600 text-white shadow-sm'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-700/60'
             }`}
           >
-            <Flag className="w-3.5 h-3.5 fill-current" />
-            Flagged for Shift ({flaggedBays})
+            <Flag className="w-3.5 h-3.5 fill-current flex-shrink-0" />
+            <span>Flagged for Shift</span>
+            <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold ${
+              filter === 'flagged'
+                ? 'bg-indigo-700 text-white'
+                : 'bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300'
+            }`}>
+              {flaggedBays}
+            </span>
           </button>
 
           <button
             id="filter-btn-optimal"
             onClick={() => setFilter('optimal')}
-            className={`px-3 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-colors cursor-pointer min-h-[44px] flex items-center gap-1 ${
+            className={`px-3.5 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-all cursor-pointer min-h-[44px] flex items-center justify-center gap-2 ${
               filter === 'optimal'
                 ? 'bg-emerald-600 text-white shadow-sm'
-                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-white/60 dark:hover:bg-slate-700/60'
             }`}
           >
-            <CheckCircle2 className="w-3.5 h-3.5" />
-            Optimal ({normalBays})
+            <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
+            <span>Optimal</span>
+            <span className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-bold ${
+              filter === 'optimal'
+                ? 'bg-emerald-700 text-white'
+                : 'bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300'
+            }`}>
+              {normalBays}
+            </span>
           </button>
         </div>
 
         {/* Search Input */}
-        <div className="relative min-w-[220px]">
-          <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+        <div className="relative w-full lg:w-72">
+          <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           <input
             id="search-bays-input"
             type="text"
             placeholder="Search bay ID or crop..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 min-h-[44px]"
+            className="w-full pl-10 pr-8 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs font-medium text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500 min-h-[44px]"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
             >
               ✕
             </button>

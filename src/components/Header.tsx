@@ -74,20 +74,20 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Desktop Navigation Tabs */}
-        <nav className="hidden md:flex items-center gap-1 bg-slate-800/80 p-1 rounded-xl border border-slate-700/60">
+        <nav className="hidden md:flex items-center gap-1.5 bg-slate-800/90 p-1.5 rounded-2xl border border-slate-700/60 shadow-inner">
           <button
             id="nav-tab-overview"
             onClick={() => onTabChange('overview')}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all min-h-[40px] cursor-pointer ${
               currentTab === 'overview'
                 ? 'bg-emerald-600 text-white shadow-sm'
                 : 'text-slate-300 hover:text-white hover:bg-slate-700/60'
             }`}
           >
-            <Layers className="w-4 h-4" />
-            Shift Overview
+            <Layers className="w-4 h-4 flex-shrink-0" />
+            <span>Shift Overview</span>
             {abnormalCount > 0 && (
-              <span className="ml-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-slate-950">
+              <span className="ml-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500 text-slate-950 font-mono">
                 {abnormalCount}
               </span>
             )}
@@ -96,16 +96,16 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="nav-tab-inspect"
             onClick={() => onTabChange('inspect')}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all min-h-[40px] cursor-pointer ${
               currentTab === 'inspect'
                 ? 'bg-emerald-600 text-white shadow-sm'
                 : 'text-slate-300 hover:text-white hover:bg-slate-700/60'
             }`}
           >
-            <AlertTriangle className="w-4 h-4" />
-            Bay Inspection & Action
+            <AlertTriangle className="w-4 h-4 flex-shrink-0" />
+            <span>Bay Inspection & Action</span>
             {flaggedCount > 0 && (
-              <span className="ml-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500 text-white">
+              <span className="ml-1 px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500 text-white font-mono">
                 {flaggedCount}
               </span>
             )}
@@ -114,22 +114,22 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="nav-tab-handover"
             onClick={() => onTabChange('handover')}
-            className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs font-semibold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all min-h-[40px] cursor-pointer ${
               currentTab === 'handover'
                 ? 'bg-emerald-600 text-white shadow-sm'
                 : 'text-slate-300 hover:text-white hover:bg-slate-700/60'
             }`}
           >
-            <FileCheck className="w-4 h-4" />
-            Handover Summary & Logs
+            <FileCheck className="w-4 h-4 flex-shrink-0" />
+            <span>Handover Summary & Logs</span>
             {shiftInfo.isLocked && (
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
             )}
           </button>
         </nav>
 
         {/* Quick Handover Readiness Badge */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <div className="text-right hidden lg:block">
             <div className="text-[11px] text-slate-400 font-medium">Flagged for Incoming:</div>
             <div className="text-xs font-bold text-indigo-400">
@@ -139,9 +139,9 @@ export const Header: React.FC<HeaderProps> = ({
           <button
             id="header-quick-handover-btn"
             onClick={() => onTabChange('handover')}
-            className="px-3.5 py-2 rounded-lg text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white flex items-center gap-1.5 shadow-sm transition-colors cursor-pointer"
+            className="px-4 py-2.5 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer min-h-[40px] whitespace-nowrap"
           >
-            <FileCheck className="w-4 h-4" />
+            <FileCheck className="w-4 h-4 flex-shrink-0" />
             <span className="hidden sm:inline">Review Handover</span>
             <span className="sm:hidden">Logs</span>
           </button>
