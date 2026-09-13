@@ -81,3 +81,36 @@ Change nothing else.
 **What I changed next and why:** I once again asked Aistudio to only update the button arrangement in the "Handover Summary & Logs" section of the screen (placing "Pending Handover Confirmation", "Print/Save PDF", and "Confirm Shift Handover" in the same row and change nothing else.). Completed the overall optimization.
 
 ---
+
+# Problem Set 2 — Put a Real Back End Behind It
+
+## Step 1 — Identify unsupported claims
+
+Before adding a back end, I reviewed the claims made by my Problem Set 1 product.
+
+### Claim 1 — Live hydro-bay telemetry
+The application presents pH, EC, water temperature, reservoir level and flow readings across 12 hydroponic bays as if they are live telemetry.
+
+Current reality:
+These values come from the existing mock dataset rather than a real farm IoT sensor system.
+
+Decision:
+Do not connect an unrelated public API and pretend it represents the hydro bays. Reframe these readings as prototype/simulated facility sensor data.
+
+### Claim 2 — External operating environment
+The current product does not provide any real external environmental context for the facility.
+
+Decision:
+Add real Singapore outdoor temperature and relative humidity data from data.gov.sg / NEA through my own back-end endpoint.
+
+### Claim 3 — Automated handover broadcast
+The interface states that alerts are broadcast or dispatched to the incoming team.
+
+Current reality:
+This is simulated in the front end and does not send a real external notification.
+
+Decision:
+Reframe this wording unless a real notification service is implemented later.
+
+---
+
