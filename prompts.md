@@ -849,4 +849,29 @@ Returned:
 This confirmed that both external data.gov.sg upstream services were reachable
 from the deployed Vercel back end.
 
+
+### Production environment endpoint verification
+
+After confirming `/api/health`, I tested the deployed environmental endpoint:
+
+GET:
+https://mgmt6110week02aaisbuildwithaistudio.vercel.app/api/environment
+
+Result:
+HTTP 200
+
+Returned live data:
+
+- Station ID: S111
+- Station: Scotts Road
+- Temperature: 29.6 °C
+- Relative humidity: 75.7%
+- Temperature observation time: 2026-09-13T18:48:00+08:00
+- Humidity observation time: 2026-09-13T18:48:00+08:00
+- Source: NEA / data.gov.sg
+
+This confirmed that the deployed Vercel serverless function was not returning
+hard-coded values and was successfully retrieving live external environmental
+data from the real upstream provider.
+
 ---
