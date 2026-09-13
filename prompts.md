@@ -161,7 +161,7 @@ I also noticed that the two readings can have different timestamps, so the produ
 ---
 
 ## Prompt 4 — First Problem Set 2 backend integration attempt
-
+```
 [ROLE:
 You are a senior full-stack engineer extending my EXISTING React application,
 "HydroCrop Monitor". This is an existing working product from Problem Set 1.
@@ -416,7 +416,7 @@ D. Whether you encountered any assumption or limitation.
 E. What I should test manually before deploying.
 
 Do not make any additional changes after giving me that report.]
-
+```
 **What came back:**
 
 Google AI Studio created:
@@ -461,8 +461,8 @@ explicit no-credential handling, and no unrelated changes.
 ---
 
 ## Prompt 5 — Revised backend master prompt
-
-[ROLE: You are a senior full-stack developer working in my existing project. Do not
+```
+ROLE: You are a senior full-stack developer working in my existing project. Do not
 rewrite what is already there; add to it.
 
 GOAL: My existing HydroCrop Monitor screen currently presents hydro-bay pH, EC,
@@ -711,9 +711,10 @@ When finished, tell me:
 7. What I should manually verify before I deploy to Vercel.
 
 Do not make any unrelated changes.]
+```
 
 **What came back:**
-
+```
 Google AI Studio revised the implementation to match the more constrained
 master-prompt structure.
 
@@ -787,9 +788,10 @@ upstream refusal and upstream unreachability.
 
 The existing 12 hydroponic bays, mock pH/EC telemetry, filters, inspection workflow,
 technician notes and handover workflow were left unchanged.
+```
 
 **What I accepted / rejected / changed and why:**
-
+```
 I accepted this revised architecture provisionally.
 
 I accepted:
@@ -824,5 +826,5 @@ the deployed Vercel endpoints in this order:
 I intentionally did not fix mobile responsiveness or the Screen 3 action-button
 layout in this prompt. Those are separate front-end issues and will be addressed
 only after the back end has been independently verified.
-
+```
 ---
