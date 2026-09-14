@@ -164,14 +164,14 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
       technicianName: currentTechnician,
       category,
       priority,
-      notes: notes.trim() || `Abnormal telemetry flagged by ${currentTechnician}.`,
+      notes: notes.trim() || `Abnormal reading flagged by ${currentTechnician}.`,
       actionRequired: actionRequired.trim() || 'Inspect bay sensors and verify automated dosing.',
       assignedTeam,
       resolved: false,
     };
 
     onFlagBay(selectedBay.id, newFlag);
-    setToastMessage(`Bay ${selectedBay.id} flagged! Status updated to "Flagged" and alert queued for incoming shift.`);
+    setToastMessage(`Bay ${selectedBay.id} flagged! Status updated to "Flagged" and added to incoming shift handover list.`);
     setShowSuccessToast(true);
     setTimeout(() => setShowSuccessToast(false), 5000);
   };
@@ -246,7 +246,7 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
           <div className="flex items-center gap-2 flex-wrap min-w-0">
             <span className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 flex-shrink-0">
               <Layers className="w-3.5 h-3.5 text-emerald-500" />
-              Select Bay to Inspect (12 Bays Automated):
+              Select Bay to Inspect (12 Prototype Bays):
             </span>
             <span className="text-[11px] text-slate-500 truncate">
               Currently on: <strong className="text-slate-900 dark:text-slate-100 font-mono font-bold">{selectedBay.id}</strong>
@@ -509,7 +509,7 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
             <div>
               <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
                 <Clock className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                Shift Trend Logs (Past 7 Hours of Dosing Telemetry)
+                Shift Trend Logs (Past 7 Hours of Prototype Dosing Readings)
               </h4>
               <p className="text-xs text-slate-500">
                 Inspect how pH and EC shifted during the active operational cycle.
@@ -586,7 +586,7 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
               </h3>
             </div>
             <p className="text-xs text-slate-500 mt-1">
-              Submitting updates bay status to <strong className="text-indigo-600 dark:text-indigo-400">"Flagged"</strong> and triggers automated alert broadcast for incoming shift ({currentTechnician} → Night Shift Bravo).
+              Submitting updates bay status to <strong className="text-indigo-600 dark:text-indigo-400">"Flagged"</strong> and records it in the handover summary for the incoming shift ({currentTechnician} → Night Shift Bravo).
             </p>
           </div>
 

@@ -33,8 +33,8 @@ export const HandoverConfirmModal: React.FC<HandoverConfirmModalProps> = ({
 
   const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' SGT';
 
-  // Construct the automated alert notification payload
-  const broadcastText = `[HYDROCROP OPS SHIFT HANDOVER BROADCAST]
+  // Construct the shift handover summary payload
+  const broadcastText = `[HYDROCROP OPS SHIFT HANDOVER SUMMARY]
 Shift: ${shiftInfo.shiftId} (${shiftInfo.shiftName})
 Outgoing Lead: ${shiftInfo.outgoingLead}
 Incoming Team: ${shiftInfo.incomingTeam}
@@ -77,10 +77,10 @@ Handover Status: LOCKED & CONFIRMED BY OUTGOING TECHNICIAN.`;
             </div>
             <div className="min-w-0">
               <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2 truncate">
-                Automated Shift Handover Broadcast
+                Shift Handover Summary
               </h3>
               <p className="text-xs text-slate-400 truncate">
-                Dispatches alert notification to incoming team: {shiftInfo.incomingTeam}
+                Records handover summary for incoming team: {shiftInfo.incomingTeam}
               </p>
             </div>
           </div>
@@ -97,7 +97,7 @@ Handover Status: LOCKED & CONFIRMED BY OUTGOING TECHNICIAN.`;
           <div className="flex items-center justify-between pb-2 border-b border-slate-800 text-slate-400">
             <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
               <Sparkles className="w-3.5 h-3.5" />
-              Automated Dispatch Ready
+              Handover Summary Ready
             </span>
             <span>{timestamp}</span>
           </div>
@@ -130,7 +130,7 @@ Handover Status: LOCKED & CONFIRMED BY OUTGOING TECHNICIAN.`;
         {/* Flagged Summary Badges */}
         <div className="mt-4">
           <div className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-            Dispatched Alert Queue ({flaggedBays.length}):
+            Handover Action Queue ({flaggedBays.length}):
           </div>
           <div className="space-y-2">
             {flaggedBays.map((bay) => (
@@ -172,7 +172,7 @@ Handover Status: LOCKED & CONFIRMED BY OUTGOING TECHNICIAN.`;
             ) : (
               <>
                 <Copy className="w-4 h-4" />
-                <span>Copy Broadcast Text</span>
+                <span>Copy Handover Summary</span>
               </>
             )}
           </button>

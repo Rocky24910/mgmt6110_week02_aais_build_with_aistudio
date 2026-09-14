@@ -93,7 +93,7 @@ export default function App() {
           return {
             ...bay,
             status: newStatus,
-            statusMessage: newStatus === 'Normal' ? 'Parameters stabilized. Flag resolved.' : 'Flag resolved. Monitoring telemetry.',
+            statusMessage: newStatus === 'Normal' ? 'Parameters stabilized. Flag resolved.' : 'Flag resolved. Monitoring bay readings.',
             activeFlag: null,
             lastUpdated: 'Just now',
           };
@@ -109,7 +109,7 @@ export default function App() {
       technician: shiftInfo.outgoingLead,
       actionType: 'FLAG_RESOLVED',
       bayId,
-      details: `Flag on ${bayId} resolved and removed from handover alert list by ${shiftInfo.outgoingLead}.`,
+      details: `Flag on ${bayId} resolved and removed from handover list by ${shiftInfo.outgoingLead}.`,
     };
 
     setActivityLogs((prev) => [resolveLog, ...prev]);
@@ -147,7 +147,7 @@ export default function App() {
       timestamp: lockTime,
       technician: shiftInfo.outgoingLead,
       actionType: 'HANDOVER_CONFIRMED',
-      details: `Shift Handover confirmed & locked by ${shiftInfo.outgoingLead}. Automated dispatch alert broadcasted to ${shiftInfo.incomingTeam} for ${flaggedCount} flagged bay(s).`,
+      details: `Shift Handover confirmed & locked by ${shiftInfo.outgoingLead}. Handover summary recorded for ${shiftInfo.incomingTeam} with ${flaggedCount} flagged bay(s).`,
     };
 
     setActivityLogs((prev) => [confirmLog, ...prev]);
@@ -222,7 +222,7 @@ export default function App() {
         abnormalCount={abnormalCount}
       />
 
-      {/* Handover Confirmation & Alert Broadcast Modal */}
+      {/* Handover Confirmation & Summary Modal */}
       <HandoverConfirmModal
         isOpen={isConfirmModalOpen}
         onClose={() => setIsConfirmModalOpen(false)}

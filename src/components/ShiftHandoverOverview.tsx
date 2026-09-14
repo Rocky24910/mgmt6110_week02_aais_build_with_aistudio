@@ -92,7 +92,7 @@ export const ShiftHandoverOverview: React.FC<ShiftHandoverOverviewProps> = ({
               Shift Handover Facility Overview
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
-              Verify pH and nutrient (EC) automated dosing across all 12 bays. Flag abnormal bays with technician diagnostic notes for incoming team ({shiftInfo.incomingTeam}).
+              Review prototype facility pH and nutrient (EC) dosing readings across all 12 bays. Flag abnormal bays with technician diagnostic notes for incoming team ({shiftInfo.incomingTeam}).
             </p>
           </div>
 
@@ -133,7 +133,7 @@ export const ShiftHandoverOverview: React.FC<ShiftHandoverOverviewProps> = ({
               {totalBays}
             </span>
             <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
-              100% Online
+              12 / 12 Bays Available
             </span>
           </div>
           <div className="mt-2 text-[11px] text-slate-500 flex items-center gap-2 flex-wrap">
@@ -224,7 +224,7 @@ export const ShiftHandoverOverview: React.FC<ShiftHandoverOverviewProps> = ({
           </div>
           <div className="mt-2 text-[11px] text-indigo-700 dark:text-indigo-300 flex items-center gap-1 font-medium">
             <Sparkles className="w-3 h-3 text-indigo-500" />
-            Alerts queue updated live
+            Handover flag list updated in app
           </div>
         </div>
       </div>
@@ -347,7 +347,7 @@ export const ShiftHandoverOverview: React.FC<ShiftHandoverOverviewProps> = ({
             Hydroponic Bays ({filteredBays.length} of {totalBays} displayed)
           </h3>
           <span className="text-[11px] sm:text-xs text-slate-500">
-            Click any bay to inspect trend logs & flag
+            Prototype facility readings • Click any bay to inspect trend logs & flag
           </span>
         </div>
 

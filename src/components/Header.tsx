@@ -26,7 +26,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
           <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-500/40 text-emerald-400 font-medium text-[10px] sm:text-[11px]">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
-            12 Bays Online & Telemetry Active
+            12 Bays in Prototype Dataset
           </span>
           <span className="hidden sm:inline text-slate-400">|</span>
           <span className="text-slate-300 font-medium text-[10px] sm:text-[11px] leading-tight">

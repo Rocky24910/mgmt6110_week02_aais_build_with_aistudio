@@ -84,7 +84,7 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
               Shift Handover Summary & Logs
             </h2>
             <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
-              Official shift handover documentation for vertical farm operations. Review flagged bays, verify pre-handover facility systems, and confirm handover alert broadcast.
+              Official shift handover documentation for vertical farm operations. Review flagged bays, verify pre-handover facility systems, and confirm shift handover summary.
             </p>
           </div>
 
@@ -122,7 +122,7 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
               {shiftInfo.isLocked ? (
                 <>
                   <ShieldCheck className="w-4 h-4 flex-shrink-0" />
-                  <span>View Broadcast Alert</span>
+                  <span>View Handover Summary</span>
                 </>
               ) : (
                 <>
@@ -175,7 +175,7 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
           </div>
 
           <span className="self-start sm:self-auto text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-900 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
-            {flaggedBays.length} Active in Broadcast
+            {flaggedBays.length} Active in Handover
           </span>
         </div>
 
@@ -428,7 +428,7 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
               </span>
             </div>
             <p className="text-xs text-slate-300 max-w-xl leading-relaxed">
-              Confirming locks this shift log, archives the {flaggedBays.length} active flag(s), and broadcasts the automated alert dispatch to {shiftInfo.incomingTeam}.
+              Confirming locks this shift log, archives the {flaggedBays.length} active flag(s), and records the handover summary for the incoming shift ({shiftInfo.incomingTeam}).
             </p>
           </div>
 
@@ -448,7 +448,7 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
               className="w-full sm:w-auto px-6 py-3 rounded-xl text-sm font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer min-h-[48px]"
             >
               <Send className="w-4 h-4 text-slate-950 flex-shrink-0" />
-              <span>{shiftInfo.isLocked ? 'View Handover Dispatch' : 'Confirm Shift Handover'}</span>
+              <span>{shiftInfo.isLocked ? 'View Handover Summary' : 'Confirm Shift Handover'}</span>
             </button>
           </div>
         </div>
