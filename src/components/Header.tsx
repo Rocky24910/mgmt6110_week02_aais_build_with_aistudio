@@ -22,29 +22,29 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="sticky top-0 z-30 bg-slate-900 border-b border-slate-800 text-slate-100 shadow-md">
       {/* Top Status Ticker */}
-      <div className="bg-slate-950 px-3 py-1.5 border-b border-slate-800/80 text-xs flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-500/40 text-emerald-400 font-medium text-[11px]">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+      <div className="bg-slate-950 px-3 py-1.5 border-b border-slate-800/80 text-[11px] sm:text-xs flex flex-wrap items-center justify-between gap-1.5 sm:gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
+          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-950 border border-emerald-500/40 text-emerald-400 font-medium text-[10px] sm:text-[11px]">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
             12 Bays Online & Telemetry Active
           </span>
           <span className="hidden sm:inline text-slate-400">|</span>
-          <span className="text-slate-300 font-medium truncate">
+          <span className="text-slate-300 font-medium truncate max-w-[140px] sm:max-w-none text-[11px]">
             {shiftInfo.facilityZone}
           </span>
         </div>
 
-        <div className="flex items-center gap-3 text-slate-400 text-[11px]">
+        <div className="flex items-center gap-2 sm:gap-3 text-slate-400 text-[10px] sm:text-[11px]">
           <span className="flex items-center gap-1 font-mono text-slate-200">
-            <Clock className="w-3 h-3 text-emerald-400" />
+            <Clock className="w-3 h-3 text-emerald-400 flex-shrink-0" />
             {currentTime}
           </span>
           {shiftInfo.isLocked ? (
-            <span className="px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 font-semibold border border-indigo-800">
-              Shift Locked & Dispatched
+            <span className="px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 font-semibold border border-indigo-800 text-[10px] sm:text-xs">
+              Shift Locked
             </span>
           ) : (
-            <span className="px-2 py-0.5 rounded bg-amber-950 text-amber-300 font-medium border border-amber-800/60">
+            <span className="px-2 py-0.5 rounded bg-amber-950 text-amber-300 font-medium border border-amber-800/60 text-[10px] sm:text-xs">
               Handover Window Open
             </span>
           )}
@@ -52,22 +52,22 @@ export const Header: React.FC<HeaderProps> = ({
       </div>
 
       {/* Main Header Bar */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-3 sm:gap-4">
         {/* Branding & Role */}
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-white shadow-inner flex-shrink-0">
-            <Sprout className="w-6 h-6" />
+        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-white shadow-inner flex-shrink-0">
+            <Sprout className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h1 className="text-lg sm:text-xl font-bold tracking-tight text-white flex items-center gap-2">
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <h1 className="text-base sm:text-xl font-bold tracking-tight text-white flex items-center gap-1.5 truncate">
                 HydroCrop Monitor
               </h1>
-              <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+              <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 sm:px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 flex-shrink-0">
                 Ops v2.4
               </span>
             </div>
-            <p className="text-xs text-slate-400">
+            <p className="text-[11px] sm:text-xs text-slate-400 truncate">
               Shift Handover & Facility Diagnostics • {shiftInfo.outgoingLead}
             </p>
           </div>

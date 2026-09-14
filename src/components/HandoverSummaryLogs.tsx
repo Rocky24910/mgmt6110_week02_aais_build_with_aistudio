@@ -89,14 +89,14 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
           </div>
 
           {/* Buttons Row: Status Indicator, Print/Save PDF, and Confirm Handover */}
-          <div className="flex items-center gap-2.5 flex-wrap sm:flex-nowrap flex-shrink-0">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-2.5 flex-shrink-0 w-full lg:w-auto">
             {shiftInfo.isLocked ? (
-              <div className="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-700/80 flex items-center justify-center gap-1.5 min-h-[44px] whitespace-nowrap shadow-sm">
+              <div className="w-full sm:w-auto px-3.5 py-2.5 rounded-xl text-xs font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-700/80 flex items-center justify-center gap-1.5 min-h-[44px] shadow-sm">
                 <Lock className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
                 <span>Locked & Confirmed</span>
               </div>
             ) : (
-              <div className="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-amber-950/80 text-amber-300 border border-amber-700/80 flex items-center justify-center gap-1.5 min-h-[44px] whitespace-nowrap shadow-sm">
+              <div className="w-full sm:w-auto px-3.5 py-2.5 rounded-xl text-xs font-bold bg-amber-950/80 text-amber-300 border border-amber-700/80 flex items-center justify-center gap-1.5 min-h-[44px] text-center shadow-sm">
                 <Unlock className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
                 <span>Pending Handover Confirmation</span>
               </div>
@@ -104,7 +104,7 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
 
             <button
               onClick={handlePrint}
-              className="px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 active:bg-slate-900 text-slate-200 border border-slate-700 transition-all flex items-center justify-center gap-2 cursor-pointer min-h-[44px] whitespace-nowrap shadow-sm"
+              className="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-800 hover:bg-slate-700 active:bg-slate-900 text-slate-200 border border-slate-700 transition-all flex items-center justify-center gap-2 cursor-pointer min-h-[44px] shadow-sm"
             >
               <Printer className="w-4 h-4 flex-shrink-0" />
               <span>Print / Save PDF</span>
@@ -113,7 +113,7 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
             <button
               id="handover-main-cta-btn"
               onClick={onOpenConfirmModal}
-              className={`px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer min-h-[44px] whitespace-nowrap ${
+              className={`w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-sm transition-all cursor-pointer min-h-[44px] ${
                 shiftInfo.isLocked
                   ? 'bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white'
                   : 'bg-emerald-600 hover:bg-emerald-500 active:bg-emerald-700 text-white'
@@ -135,7 +135,7 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
         </div>
 
         {/* Handover Roster Details */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4 pt-4 border-t border-slate-800/80 text-xs font-mono">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 mt-4 pt-4 border-t border-slate-800/80 text-xs font-mono">
           <div>
             <span className="text-slate-500 block text-[10px] uppercase">Shift Reference:</span>
             <span className="font-bold text-slate-200">{shiftInfo.shiftId}</span>
@@ -159,10 +159,10 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
 
       {/* Flagged Bays & Unresolved Alerts Section (Core) */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
           <div>
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300">
+              <div className="p-1.5 rounded-lg bg-purple-100 dark:bg-purple-900/60 text-purple-700 dark:text-purple-300 flex-shrink-0">
                 <Flag className="w-5 h-5 fill-current" />
               </div>
               <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">
@@ -174,7 +174,7 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
             </p>
           </div>
 
-          <span className="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-900 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+          <span className="self-start sm:self-auto text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-900 dark:bg-indigo-950 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
             {flaggedBays.length} Active in Broadcast
           </span>
         </div>
@@ -199,7 +199,7 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
               >
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-2">
                   <div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-mono text-xs font-black px-2 py-0.5 rounded bg-slate-900 text-white dark:bg-slate-700">
                         {bay.id}
                       </span>
@@ -211,14 +211,14 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
                       </span>
                     </div>
 
-                    <div className="mt-1 flex items-center gap-3 text-xs text-slate-500">
+                    <div className="mt-1 flex items-center gap-2 sm:gap-3 text-xs text-slate-500 flex-wrap">
                       <span>Category: <strong className="text-slate-800 dark:text-slate-200">{bay.activeFlag?.category}</strong></span>
                       <span>•</span>
                       <span>Flagged: {bay.activeFlag?.flaggedAt} by {bay.activeFlag?.technicianName}</span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-between sm:justify-end gap-2 w-full sm:w-auto mt-1 sm:mt-0">
                     <span className="text-xs font-mono font-bold px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200">
                       pH: {bay.pH.toFixed(2)} | EC: {bay.ec.toFixed(2)} mS
                     </span>
@@ -271,7 +271,7 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
             </div>
             <button
               onClick={() => onInspectBay(unflaggedAbnormal[0].id)}
-              className="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white flex-shrink-0 cursor-pointer min-h-[40px]"
+              className="w-full sm:w-auto px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-600 hover:bg-amber-500 text-white flex-shrink-0 cursor-pointer min-h-[44px] flex items-center justify-center"
             >
               Inspect {unflaggedAbnormal[0].id}
             </button>
@@ -281,10 +281,10 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
 
       {/* Facility Pre-Handover Checklist */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:items-center justify-between gap-2 pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
           <div>
             <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-              <CheckSquare className="w-5 h-5 text-emerald-500" />
+              <CheckSquare className="w-5 h-5 text-emerald-500 flex-shrink-0" />
               Facility Pre-Handover Verification Checklist
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
@@ -292,7 +292,7 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 self-start sm:self-auto">
             <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300">
               {completedChecks} of {checklist.length} Verified ({checklistPct}%)
             </span>
@@ -339,23 +339,23 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
 
       {/* Technician Shift Activity Log & Audit Trail */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex flex-col sm:flex-row sm:items-start sm:items-center justify-between gap-1 pb-3 mb-4 border-b border-slate-100 dark:border-slate-800">
           <div>
             <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
-              <Clock className="w-5 h-5 text-slate-400" />
+              <Clock className="w-5 h-5 text-slate-400 flex-shrink-0" />
               Technician Shift Activity Log & Audit Trail
             </h3>
             <p className="text-xs text-slate-500 mt-0.5">
               Chronological log of calibrations, automated alerts, and flag actions during this shift.
             </p>
           </div>
-          <span className="text-xs font-mono text-slate-500">
+          <span className="text-xs font-mono text-slate-500 self-start sm:self-auto">
             {activityLogs.length} events logged
           </span>
         </div>
 
         {/* Add quick observation log */}
-        <form onSubmit={handleAddLogSubmit} className="mb-4 flex gap-2">
+        <form onSubmit={handleAddLogSubmit} className="mb-4 flex flex-col sm:flex-row gap-2">
           <input
             id="new-activity-log-input"
             type="text"
@@ -366,10 +366,10 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
           />
           <button
             type="submit"
-            className="px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors flex items-center gap-1.5 cursor-pointer min-h-[44px]"
+            className="w-full sm:w-auto px-4 py-2.5 rounded-xl text-xs font-bold bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-200 transition-colors flex items-center justify-center gap-1.5 cursor-pointer min-h-[44px]"
           >
-            <Plus className="w-4 h-4" />
-            Add Entry
+            <Plus className="w-4 h-4 flex-shrink-0" />
+            <span>Add Entry</span>
           </button>
         </form>
 
@@ -384,8 +384,8 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
                 {log.timestamp}
               </span>
 
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-0.5">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-0.5 flex-wrap">
                   <span
                     className={`text-[10px] font-bold px-1.5 py-0.2 rounded uppercase ${
                       log.actionType === 'FLAG_CREATED'
@@ -406,7 +406,7 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
                     by {log.technician}
                   </span>
                 </div>
-                <p className="text-slate-700 dark:text-slate-300 text-xs leading-relaxed">
+                <p className="text-slate-700 dark:text-slate-300 text-xs leading-relaxed break-words">
                   {log.details}
                 </p>
               </div>
@@ -422,7 +422,7 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 relative z-10">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <ShieldCheck className="w-5 h-5 text-emerald-400" />
+              <ShieldCheck className="w-5 h-5 text-emerald-400 flex-shrink-0" />
               <span className="font-bold text-base text-white">
                 Ready to Complete Shift Handover?
               </span>
@@ -432,11 +432,11 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
             </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
             {shiftInfo.isLocked && (
               <button
                 onClick={onUnlockShift}
-                className="px-3.5 py-2.5 rounded-xl text-xs font-bold bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-600 transition-colors cursor-pointer min-h-[44px]"
+                className="w-full sm:w-auto px-3.5 py-2.5 rounded-xl text-xs font-bold bg-slate-800/80 hover:bg-slate-700 text-slate-300 border border-slate-600 transition-colors cursor-pointer min-h-[44px] flex items-center justify-center"
               >
                 Reopen Log
               </button>
@@ -445,9 +445,9 @@ export const HandoverSummaryLogs: React.FC<HandoverSummaryLogsProps> = ({
             <button
               id="confirm-shift-handover-action-btn"
               onClick={onOpenConfirmModal}
-              className="px-6 py-3 rounded-xl text-sm font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer min-h-[48px]"
+              className="w-full sm:w-auto px-6 py-3 rounded-xl text-sm font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer min-h-[48px]"
             >
-              <Send className="w-4 h-4 text-slate-950" />
+              <Send className="w-4 h-4 text-slate-950 flex-shrink-0" />
               <span>{shiftInfo.isLocked ? 'View Handover Dispatch' : 'Confirm Shift Handover'}</span>
             </button>
           </div>

@@ -218,13 +218,13 @@ export const LiveExternalConditions: React.FC = () => {
           <div className="space-y-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {/* Outdoor Temperature */}
-              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
+              <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
+                <div className="flex items-center gap-2.5 min-w-0">
                   <div className="w-9 h-9 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center flex-shrink-0">
                     <Thermometer className="w-5 h-5" />
                   </div>
-                  <div>
-                    <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
+                  <div className="min-w-0">
+                    <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block truncate">
                       Outdoor Temperature
                     </span>
                     <span className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 font-mono">
@@ -232,9 +232,9 @@ export const LiveExternalConditions: React.FC = () => {
                     </span>
                   </div>
                 </div>
-                <div className="text-right text-[11px] text-slate-500 dark:text-slate-400">
-                  <span className="flex items-center gap-1 justify-end font-medium">
-                    <Clock className="w-3 h-3 text-slate-400" />
+                <div className="text-left sm:text-right text-[11px] text-slate-500 dark:text-slate-400 flex-shrink-0">
+                  <span className="flex items-center gap-1 justify-start sm:justify-end font-medium">
+                    <Clock className="w-3 h-3 text-slate-400 flex-shrink-0" />
                     Observed:
                   </span>
                   <span className="font-mono text-[10px] text-slate-700 dark:text-slate-300 block">
@@ -244,13 +244,13 @@ export const LiveExternalConditions: React.FC = () => {
               </div>
 
               {/* Relative Humidity */}
-              <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between">
-                <div className="flex items-center gap-2.5">
+              <div className="p-3 sm:p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 flex items-center justify-between gap-2 flex-wrap sm:flex-nowrap">
+                <div className="flex items-center gap-2.5 min-w-0">
                   <div className="w-9 h-9 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center flex-shrink-0">
                     <Droplets className="w-5 h-5" />
                   </div>
-                  <div>
-                    <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block">
+                  <div className="min-w-0">
+                    <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider block truncate">
                       Relative Humidity
                     </span>
                     <span className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 font-mono">
@@ -260,9 +260,9 @@ export const LiveExternalConditions: React.FC = () => {
                     </span>
                   </div>
                 </div>
-                <div className="text-right text-[11px] text-slate-500 dark:text-slate-400">
-                  <span className="flex items-center gap-1 justify-end font-medium">
-                    <Clock className="w-3 h-3 text-slate-400" />
+                <div className="text-left sm:text-right text-[11px] text-slate-500 dark:text-slate-400 flex-shrink-0">
+                  <span className="flex items-center gap-1 justify-start sm:justify-end font-medium">
+                    <Clock className="w-3 h-3 text-slate-400 flex-shrink-0" />
                     Observed:
                   </span>
                   <span className="font-mono text-[10px] text-slate-700 dark:text-slate-300 block">
@@ -273,8 +273,8 @@ export const LiveExternalConditions: React.FC = () => {
             </div>
 
             {/* Attribution & Contextual Footer */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 text-[11px] text-slate-500 dark:text-slate-400">
-              <span className="flex items-center gap-1">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 pt-1 text-[11px] text-slate-500 dark:text-slate-400">
+              <span className="flex items-center gap-1.5 flex-wrap">
                 <span>Source: NEA / data.gov.sg</span>
                 <span className="text-slate-400">•</span>
                 <span>Station: <strong className="text-slate-700 dark:text-slate-300">Scotts Road ({data.stationId})</strong></span>

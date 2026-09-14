@@ -17,7 +17,9 @@ import {
   Droplets,
   Activity,
   User,
-  Users
+  Users,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 interface BayInspectionActionFormProps {
@@ -61,6 +63,57 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
   );
   const [showSuccessToast, setShowSuccessToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
+
+  // Horizontal scroll controls for the 12-bay selector row
+  const bayScrollRef = React.useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScrollButtons = () => {
+    if (bayScrollRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = bayScrollRef.current;
+      setCanScrollLeft(scrollLeft > 4);
+      setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 6);
+    }
+  };
+
+  useEffect(() => {
+    checkScrollButtons();
+    const el = bayScrollRef.current;
+    if (!el) return;
+    el.addEventListener('scroll', checkScrollButtons, { passive: true });
+    window.addEventListener('resize', checkScrollButtons);
+    return () => {
+      el.removeEventListener('scroll', checkScrollButtons);
+      window.removeEventListener('resize', checkScrollButtons);
+    };
+  }, [bays]);
+
+  // Keep currently selected bay in view via auto-scroll
+  useEffect(() => {
+    if (bayScrollRef.current) {
+      const activeBtn = bayScrollRef.current.querySelector<HTMLElement>(
+        `#select-bay-pill-${selectedBayId.toLowerCase()}`
+      );
+      if (activeBtn) {
+        activeBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+      }
+    }
+  }, [selectedBayId]);
+
+  const scrollBays = (direction: 'left' | 'right') => {
+    if (bayScrollRef.current) {
+      const scrollAmount = direction === 'left' ? -220 : 220;
+      bayScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  // Support standard desktop mouse wheel horizontal scrolling
+  const handleWheelScroll = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (e.deltaY !== 0 && e.deltaX === 0 && bayScrollRef.current) {
+      bayScrollRef.current.scrollLeft += e.deltaY;
+    }
+  };
 
   // Auto-fill form if switching to another bay
   useEffect(() => {
@@ -157,50 +210,103 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
 
       {/* Top Header & Breadcrumb Navigation */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2.5 min-w-0">
           <button
             id="back-to-overview-btn"
             onClick={onBackToOverview}
-            className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer"
+            className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer flex-shrink-0"
             title="Back to Overview"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
-          <div>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+          <div className="min-w-0">
+            <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-slate-500 block truncate">
               Screen 2 • Diagnostics & Flagging
             </span>
-            <h2 className="text-xl font-black text-slate-900 dark:text-slate-100">
+            <h2 className="text-lg sm:text-xl font-black text-slate-900 dark:text-slate-100 truncate">
               Bay Inspection & Action Form
             </h2>
           </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-full sm:w-auto">
           <button
             onClick={onProceedToHandover}
-            className="px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-200 hover:bg-slate-700 transition-colors flex items-center gap-1.5 cursor-pointer min-h-[44px]"
+            className="w-full sm:w-auto justify-center px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-200 hover:bg-slate-700 transition-colors flex items-center gap-1.5 cursor-pointer min-h-[44px]"
           >
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            Proceed to Handover Logs
+            <ShieldCheck className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+            <span>Proceed to Handover Logs</span>
           </button>
         </div>
       </div>
 
       {/* Quick 12-Bay Selector Bar */}
-      <div className="bg-white dark:bg-slate-900 rounded-xl p-3 border border-slate-200 dark:border-slate-800 shadow-sm">
-        <div className="flex items-center justify-between mb-2 px-1">
-          <span className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-            <Layers className="w-3.5 h-3.5 text-slate-400" />
-            Select Bay to Inspect (12 Bays Automated):
-          </span>
-          <span className="text-[11px] text-slate-500">
-            Currently on: <strong className="text-slate-900 dark:text-slate-100">{selectedBay.id}</strong>
-          </span>
+      <div className="bg-white dark:bg-slate-900 rounded-xl p-3 sm:p-3.5 border border-slate-200 dark:border-slate-800 shadow-sm w-full max-w-full min-w-0 overflow-hidden">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2 px-0.5">
+          <div className="flex items-center gap-2 flex-wrap min-w-0">
+            <span className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5 flex-shrink-0">
+              <Layers className="w-3.5 h-3.5 text-emerald-500" />
+              Select Bay to Inspect (12 Bays Automated):
+            </span>
+            <span className="text-[11px] text-slate-500 truncate">
+              Currently on: <strong className="text-slate-900 dark:text-slate-100 font-mono font-bold">{selectedBay.id}</strong>
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between sm:justify-end gap-2">
+            {/* Subtle visual cue to inform users that all 12 bays are horizontally scrollable */}
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-medium text-[10px] sm:text-[11px] border border-slate-200 dark:border-slate-700/60 flex-shrink-0">
+              <span className="text-emerald-500 font-bold">↔</span> Swipe / scroll to view all 12 bays
+            </span>
+
+            {/* Desktop & Trackpad Quick Scroll Buttons */}
+            <div className="flex items-center gap-1 flex-shrink-0">
+              <button
+                type="button"
+                id="bay-selector-scroll-left"
+                onClick={() => scrollBays('left')}
+                disabled={!canScrollLeft}
+                aria-label="Scroll left"
+                title="Scroll left"
+                className={`p-1.5 rounded-lg border transition-all cursor-pointer min-h-[32px] min-w-[32px] flex items-center justify-center ${
+                  canScrollLeft
+                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border-slate-200 dark:border-slate-700 shadow-xs'
+                    : 'bg-slate-50 dark:bg-slate-900/50 text-slate-300 dark:text-slate-700 border-transparent cursor-not-allowed opacity-30'
+                }`}
+              >
+                <ChevronLeft className="w-3.5 h-3.5" />
+              </button>
+              <button
+                type="button"
+                id="bay-selector-scroll-right"
+                onClick={() => scrollBays('right')}
+                disabled={!canScrollRight}
+                aria-label="Scroll right"
+                title="Scroll right to reach BAY-12"
+                className={`p-1.5 rounded-lg border transition-all cursor-pointer min-h-[32px] min-w-[32px] flex items-center justify-center ${
+                  canScrollRight
+                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border-slate-200 dark:border-slate-700 shadow-xs'
+                    : 'bg-slate-50 dark:bg-slate-900/50 text-slate-300 dark:text-slate-700 border-transparent cursor-not-allowed opacity-30'
+                }`}
+              >
+                <ChevronRight className="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
         </div>
 
-        {/* Scrollable pill container with high touch targets */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+        {/* Horizontally scrollable 12-bay row with touch and mouse support */}
+        <div
+          ref={bayScrollRef}
+          onWheel={handleWheelScroll}
+          tabIndex={0}
+          aria-label="Select Bay to Inspect (12 Bays Automated)"
+          className="bay-selector-scroll flex items-center gap-2 overflow-x-auto overflow-y-hidden pb-2.5 pt-1 w-full max-w-full min-w-0 overscroll-x-contain touch-pan-x outline-none focus-visible:ring-1 focus-visible:ring-emerald-500/50 rounded-lg select-none"
+          style={{
+            WebkitOverflowScrolling: 'touch',
+            touchAction: 'pan-x',
+          }}
+        >
           {bays.map((bay) => {
             const isSelected = bay.id === selectedBayId;
             return (
@@ -208,15 +314,15 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
                 key={bay.id}
                 id={`select-bay-pill-${bay.id.toLowerCase()}`}
                 onClick={() => onSelectBay(bay.id)}
-                className={`flex-shrink-0 px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer min-h-[44px] ${
+                className={`flex-shrink-0 px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer min-h-[44px] min-w-[88px] justify-center whitespace-nowrap ${
                   isSelected
-                    ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 shadow-md ring-2 ring-emerald-500'
-                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                    ? 'bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 shadow-md ring-2 ring-emerald-500 font-black scale-[1.02]'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200/60 dark:border-slate-700/60'
                 }`}
               >
                 {/* Status Dot */}
                 <span
-                  className={`w-2 h-2 rounded-full ${
+                  className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${
                     bay.status === 'Flagged'
                       ? 'bg-indigo-500 animate-pulse'
                       : bay.status === 'Critical'
@@ -226,9 +332,9 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
                       : 'bg-emerald-500'
                   }`}
                 />
-                <span>{bay.id}</span>
+                <span className="font-mono">{bay.id}</span>
                 {bay.status === 'Flagged' && (
-                  <Flag className="w-3 h-3 text-indigo-400 fill-indigo-400" />
+                  <Flag className="w-3 h-3 text-indigo-400 fill-indigo-400 flex-shrink-0" />
                 )}
               </button>
             );
@@ -285,24 +391,24 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
         </div>
 
         {/* Real-time Diagnostics Comparison Metrics */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3 mt-4">
           {/* Metric 1: pH */}
           <div
-            className={`p-3 rounded-xl border ${
+            className={`p-2.5 sm:p-3 rounded-xl border flex flex-col justify-between ${
               isPhOff
                 ? 'bg-rose-50/70 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/60'
                 : 'bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/60'
             }`}
           >
-            <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
+            <div className="flex items-center justify-between gap-1 text-[11px] sm:text-xs text-slate-500 font-medium flex-wrap">
               <span>pH Reading</span>
-              <span className="font-mono text-[10px]">
+              <span className="font-mono text-[10px] text-slate-400">
                 Tgt: {selectedBay.targetPhMin}-{selectedBay.targetPhMax}
               </span>
             </div>
-            <div className="mt-1 flex items-baseline justify-between">
+            <div className="mt-1 flex items-baseline justify-between flex-wrap gap-1">
               <span
-                className={`text-2xl font-black font-mono ${
+                className={`text-xl sm:text-2xl font-black font-mono ${
                   isPhOff
                     ? 'text-rose-700 dark:text-rose-400'
                     : 'text-slate-900 dark:text-slate-100'
@@ -311,35 +417,35 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
                 {selectedBay.pH.toFixed(2)}
               </span>
               <span
-                className={`text-[11px] font-bold ${
+                className={`text-[10px] sm:text-[11px] font-bold ${
                   isPhOff ? 'text-rose-600' : 'text-slate-500'
                 }`}
               >
                 {Number(phDeviation) > 0 ? `+${phDeviation}` : phDeviation}
               </span>
             </div>
-            <div className="text-[11px] text-slate-500 mt-0.5">
+            <div className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 truncate">
               {isPhOff ? (selectedBay.pH > selectedBay.targetPhMax ? 'Spike (Alkaline)' : 'Drop (Acidic)') : 'In Safe Zone'}
             </div>
           </div>
 
           {/* Metric 2: EC */}
           <div
-            className={`p-3 rounded-xl border ${
+            className={`p-2.5 sm:p-3 rounded-xl border flex flex-col justify-between ${
               isEcOff
                 ? 'bg-amber-50/70 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900/60'
                 : 'bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/60'
             }`}
           >
-            <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
+            <div className="flex items-center justify-between gap-1 text-[11px] sm:text-xs text-slate-500 font-medium flex-wrap">
               <span>EC (Nutrient)</span>
-              <span className="font-mono text-[10px]">
+              <span className="font-mono text-[10px] text-slate-400">
                 Tgt: {selectedBay.targetEcMin}-{selectedBay.targetEcMax}
               </span>
             </div>
-            <div className="mt-1 flex items-baseline justify-between">
+            <div className="mt-1 flex items-baseline justify-between flex-wrap gap-1">
               <span
-                className={`text-2xl font-black font-mono ${
+                className={`text-xl sm:text-2xl font-black font-mono ${
                   isEcOff
                     ? 'text-amber-700 dark:text-amber-400'
                     : 'text-slate-900 dark:text-slate-100'
@@ -349,49 +455,49 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
                 <span className="text-xs font-normal text-slate-500 ml-0.5">mS</span>
               </span>
             </div>
-            <div className="text-[11px] text-slate-500 mt-0.5">
+            <div className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 truncate">
               {isEcOff ? (selectedBay.ec > selectedBay.targetEcMax ? 'Over-concentrated' : 'Depleted') : 'Optimal Nutrients'}
             </div>
           </div>
 
           {/* Metric 3: Water Temp */}
           <div
-            className={`p-3 rounded-xl border ${
+            className={`p-2.5 sm:p-3 rounded-xl border flex flex-col justify-between ${
               isTempOff
                 ? 'bg-rose-50/70 dark:bg-rose-950/40 border-rose-200 dark:border-rose-900/60'
                 : 'bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/60'
             }`}
           >
-            <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
+            <div className="flex items-center justify-between gap-1 text-[11px] sm:text-xs text-slate-500 font-medium">
               <span>Water Temp</span>
-              <Thermometer className="w-3.5 h-3.5 text-slate-400" />
+              <Thermometer className="w-3.5 h-3.5 text-slate-400 flex-shrink-0" />
             </div>
             <div className="mt-1 flex items-baseline justify-between">
-              <span className="text-2xl font-black font-mono text-slate-900 dark:text-slate-100">
+              <span className="text-xl sm:text-2xl font-black font-mono text-slate-900 dark:text-slate-100">
                 {selectedBay.waterTemp.toFixed(1)}°C
               </span>
             </div>
-            <div className="text-[11px] text-slate-500 mt-0.5">
+            <div className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 truncate">
               Target: {selectedBay.targetTempMin}-{selectedBay.targetTempMax}°C
             </div>
           </div>
 
           {/* Metric 4: DO & Water Level */}
-          <div className="p-3 rounded-xl border bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/60">
-            <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-              <span>Dissolved O2 / Res</span>
-              <Droplets className="w-3.5 h-3.5 text-cyan-500" />
+          <div className="p-2.5 sm:p-3 rounded-xl border bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/60 flex flex-col justify-between">
+            <div className="flex items-center justify-between gap-1 text-[11px] sm:text-xs text-slate-500 font-medium">
+              <span>DO / Res</span>
+              <Droplets className="w-3.5 h-3.5 text-cyan-500 flex-shrink-0" />
             </div>
-            <div className="mt-1 flex items-baseline justify-between">
-              <span className="text-2xl font-black font-mono text-slate-900 dark:text-slate-100">
+            <div className="mt-1 flex items-baseline justify-between flex-wrap gap-1">
+              <span className="text-xl sm:text-2xl font-black font-mono text-slate-900 dark:text-slate-100">
                 {selectedBay.dissolvedOxygen}
-                <span className="text-xs font-normal text-slate-500 ml-0.5">mg/L</span>
+                <span className="text-[10px] sm:text-xs font-normal text-slate-500 ml-0.5">mg/L</span>
               </span>
               <span className="text-xs font-mono font-bold text-slate-700 dark:text-slate-300">
                 {selectedBay.waterLevelPct}%
               </span>
             </div>
-            <div className="text-[11px] text-slate-500 mt-0.5">
+            <div className="text-[10px] sm:text-[11px] text-slate-500 mt-0.5 truncate">
               Flow: {selectedBay.flowRateLpm} L/min
             </div>
           </div>
@@ -399,24 +505,27 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
 
         {/* Detailed Trend Logs (Past 7 Hours) */}
         <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800">
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-3">
             <div>
               <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-                <Clock className="w-4 h-4 text-emerald-500" />
+                <Clock className="w-4 h-4 text-emerald-500 flex-shrink-0" />
                 Shift Trend Logs (Past 7 Hours of Dosing Telemetry)
               </h4>
               <p className="text-xs text-slate-500">
                 Inspect how pH and EC shifted during the active operational cycle.
               </p>
             </div>
-            <span className="text-[11px] font-mono text-slate-400">
-              Logged hourly
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="sm:hidden text-[10px] text-slate-400">Swipe for all columns →</span>
+              <span className="text-[11px] font-mono text-slate-400">
+                Logged hourly
+              </span>
+            </div>
           </div>
 
           {/* Hourly Trend Table */}
-          <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800">
-            <table className="w-full text-left text-xs">
+          <div className="overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 -mx-1 sm:mx-0">
+            <table className="w-full min-w-[540px] text-left text-xs">
               <thead className="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold border-b border-slate-200 dark:border-slate-700">
                 <tr>
                   <th className="py-2.5 px-3">Time</th>
@@ -466,13 +575,13 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
 
       {/* Flag for Inspection Form */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl p-4 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-md">
-        <div className="flex items-center justify-between pb-4 mb-5 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 pb-4 mb-5 border-b border-slate-100 dark:border-slate-800">
           <div>
             <div className="flex items-center gap-2">
-              <div className="p-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+              <div className="p-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex-shrink-0">
                 <Flag className="w-5 h-5 fill-current" />
               </div>
-              <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">
+              <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">
                 {selectedBay.activeFlag ? `Manage Active Flag for ${selectedBay.id}` : `Flag ${selectedBay.id} for Inspection`}
               </h3>
             </div>
@@ -484,7 +593,7 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
           {selectedBay.activeFlag && (
             <button
               onClick={handleResolve}
-              className="px-3 py-2 rounded-xl text-xs font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-900 dark:bg-emerald-950 dark:hover:bg-emerald-900 dark:text-emerald-300 transition-colors flex items-center gap-1.5 cursor-pointer min-h-[44px]"
+              className="w-full sm:w-auto justify-center px-3 py-2 rounded-xl text-xs font-bold bg-emerald-100 hover:bg-emerald-200 text-emerald-900 dark:bg-emerald-950 dark:hover:bg-emerald-900 dark:text-emerald-300 transition-colors flex items-center gap-1.5 cursor-pointer min-h-[44px]"
             >
               <RotateCcw className="w-4 h-4" />
               Resolve & Clear Flag
@@ -519,7 +628,7 @@ export const BayInspectionActionForm: React.FC<BayInspectionActionFormProps> = (
               <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">
                 Priority Level <span className="text-rose-500">*</span>
               </label>
-              <div className="grid grid-cols-4 gap-1.5">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                 {PRIORITY_LEVELS.map((lvl) => {
                   const isSelected = priority === lvl;
                   return (

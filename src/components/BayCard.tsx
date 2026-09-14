@@ -86,12 +86,12 @@ export const BayCard: React.FC<BayCardProps> = ({ bay, onInspect }) => {
       {/* Top Header: ID, Crop, Status */}
       <div>
         <div className="flex items-start justify-between gap-2 mb-2">
-          <div>
+          <div className="min-w-0">
             <div className="flex items-center gap-2">
-              <span className="font-mono text-xs font-extrabold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700">
+              <span className="font-mono text-xs font-extrabold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 flex-shrink-0">
                 {bay.id}
               </span>
-              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+              <span className="text-[11px] text-slate-500 dark:text-slate-400 font-medium truncate">
                 {bay.growthStage}
               </span>
             </div>
@@ -99,7 +99,7 @@ export const BayCard: React.FC<BayCardProps> = ({ bay, onInspect }) => {
               {bay.cropType}
             </h3>
           </div>
-          <div>{getStatusBadge()}</div>
+          <div className="flex-shrink-0">{getStatusBadge()}</div>
         </div>
 
         {/* Status Message or Active Flag Callout */}
@@ -215,7 +215,7 @@ export const BayCard: React.FC<BayCardProps> = ({ bay, onInspect }) => {
         </div>
 
         {/* Secondary Metrics Strip: Temp & Water Level */}
-        <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 px-1 py-1.5 border-t border-slate-100 dark:border-slate-800/80">
+        <div className="flex items-center justify-between flex-wrap gap-y-1 gap-x-2 text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 px-1 py-1.5 border-t border-slate-100 dark:border-slate-800/80">
           <div className="flex items-center gap-1">
             <Thermometer className="w-3.5 h-3.5 text-slate-400" />
             <span>Water Temp:</span>

@@ -1,1 +1,42 @@
 @import "tailwindcss";
+
+/* Subtle, accessible horizontal scrollbar for Bay Selector on Screen 2 */
+.bay-selector-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #94a3b8 #f1f5f9;
+}
+
+.dark .bay-selector-scroll,
+[data-theme="dark"] .bay-selector-scroll {
+  scrollbar-color: #475569 #1e293b;
+}
+
+.bay-selector-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.bay-selector-scroll::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 9999px;
+}
+
+.dark .bay-selector-scroll::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+.bay-selector-scroll::-webkit-scrollbar-thumb {
+  background: #94a3b8;
+  border-radius: 9999px;
+}
+
+.bay-selector-scroll::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+
+.dark .bay-selector-scroll::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+.dark .bay-selector-scroll::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}

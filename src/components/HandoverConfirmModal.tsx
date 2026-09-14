@@ -68,32 +68,32 @@ Handover Status: LOCKED & CONFIRMED BY OUTGOING TECHNICIAN.`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl text-slate-100 p-5 sm:p-6">
+      <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl text-slate-100 p-4 sm:p-6">
         {/* Modal Header */}
         <div className="flex items-start justify-between gap-3 pb-4 border-b border-slate-800">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-500/40 flex items-center justify-center text-indigo-400 flex-shrink-0">
               <Bell className="w-5 h-5 animate-bounce" />
             </div>
-            <div>
-              <h3 className="text-lg font-bold text-white flex items-center gap-2">
+            <div className="min-w-0">
+              <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2 truncate">
                 Automated Shift Handover Broadcast
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-400 truncate">
                 Dispatches alert notification to incoming team: {shiftInfo.incomingTeam}
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors flex-shrink-0"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Dispatch Overview Box */}
-        <div className="mt-4 p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3 font-mono text-xs">
+        <div className="mt-4 p-3.5 sm:p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-3 font-mono text-xs">
           <div className="flex items-center justify-between pb-2 border-b border-slate-800 text-slate-400">
             <span className="flex items-center gap-1.5 text-emerald-400 font-bold">
               <Sparkles className="w-3.5 h-3.5" />
@@ -102,7 +102,7 @@ Handover Status: LOCKED & CONFIRMED BY OUTGOING TECHNICIAN.`;
             <span>{timestamp}</span>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 text-[11px]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
             <div>
               <span className="text-slate-500">Shift ID:</span>{' '}
               <span className="text-slate-200 font-bold">{shiftInfo.shiftId}</span>
@@ -136,7 +136,7 @@ Handover Status: LOCKED & CONFIRMED BY OUTGOING TECHNICIAN.`;
             {flaggedBays.map((bay) => (
               <div
                 key={bay.id}
-                className="p-2.5 rounded-lg bg-slate-800/80 border border-indigo-500/30 flex items-start justify-between gap-3 text-xs"
+                className="p-2.5 rounded-lg bg-slate-800/80 border border-indigo-500/30 flex flex-col sm:flex-row sm:items-start justify-between gap-1 sm:gap-3 text-xs"
               >
                 <div>
                   <div className="flex items-center gap-2">
