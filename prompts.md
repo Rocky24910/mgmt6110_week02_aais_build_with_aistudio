@@ -1000,13 +1000,31 @@ The main changes included:
 
 Google AI Studio stated that desktop styling and workflows were preserved.
 
+
 **What I accepted / rejected / changed and why:**
 
-Pending real viewport verification.
+I manually inspected all three screens using Google AI Studio's Mobile preview
+after Prompt 6.
 
-I did not accept the responsive work as complete based only on the AI Studio
-report. I will independently inspect the application at approximately 375px,
-430px, and desktop width before deciding whether the changes meet the requirement.
+Screen 1 passed the initial mobile visual check. Its main content stacked
+appropriately and the primary actions remained usable.
 
-I will specifically check whether `overflow-x-hidden` is merely hiding content
-that still overflows the viewport.
+Screen 3 also passed the initial mobile check. Its action buttons stacked
+vertically, which I accepted as appropriate behavior for a narrow viewport.
+
+Screen 2 only partly passed.
+
+I found that the "Select Bay to Inspect (12 Bays Automated)" selector did not
+provide access to all 12 bay buttons. At mobile width, BAY-04 was already clipped
+and later bays could not be reached. I also observed this problem on desktop.
+
+This showed that the AI Studio report that mobile responsiveness had been
+completed was not sufficient evidence by itself.
+
+I therefore rejected this part of the implementation and issued a narrow
+follow-up correction rather than asking the agent to redesign the screen.
+
+---
+
+
+
