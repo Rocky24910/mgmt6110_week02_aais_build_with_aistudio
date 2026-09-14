@@ -1026,5 +1026,103 @@ follow-up correction rather than asking the agent to redesign the screen.
 
 ---
 
+## Prompt 6A — Bay selector accessibility correction
+```
+Human verification of Prompt 6 found one remaining responsive/accessibility issue.
 
+On Screen 2, the "Select Bay to Inspect (12 Bays Automated)" selector does not
+allow the user to access all 12 bay buttons.
 
+At approximately 375px mobile width, BAY-04 is already clipped and BAY-05 through
+BAY-12 cannot be reached. I also observed the same accessibility problem on the
+desktop version.
+
+Fix ONLY this bay-selector component.
+
+REQUIREMENTS:
+
+1. Keep all 12 bay buttons in one horizontal selector row.
+
+2. Make ONLY the bay-selector row horizontally scrollable so the user can reach
+   BAY-01 through BAY-12 on both desktop and mobile.
+
+3. The overall page must NOT gain horizontal scrolling.
+
+4. On mobile, support normal touch/swipe horizontal scrolling.
+
+5. On desktop, support normal mouse/trackpad horizontal scrolling.
+
+6. Add a subtle visual cue such as:
+   "Swipe / scroll to view all 12 bays"
+   so users understand that more bays are available horizontally.
+
+7. Keep the currently selected bay visually identifiable.
+
+8. Do not shrink the bay buttons so much that their labels become difficult to read.
+
+9. Verify that BAY-01 and BAY-12 can both be reached and selected.
+
+GUARDRAILS:
+
+Change ONLY the Screen 2 bay selector and any styling directly required for it.
+
+Do NOT change:
+- Screen 1
+- Screen 3
+- bottom navigation
+- header
+- API code
+- Live External Conditions
+- hydro-bay data
+- inspection workflow
+- flagging behavior
+- desktop visual design outside this selector
+- any other responsive behavior created in Prompt 6
+
+Do not add packages.
+
+When finished, tell me:
+1. Which file(s) you changed.
+2. How horizontal scrolling is implemented.
+3. How mobile and desktop users discover that the selector is scrollable.
+4. Whether you verified that BAY-12 can be reached and selected.
+ ```
+  
+**What came back:**
+
+Google AI Studio modified:
+
+- `/src/components/BayInspectionActionForm.tsx`
+- `/src/index.css`
+
+The 12-bay selector was changed into a single horizontally scrollable row with
+fixed-size bay buttons.
+
+The selector now supports:
+- touch/swipe scrolling on mobile;
+- trackpad and mouse-wheel scrolling on desktop;
+- dedicated left/right scroll buttons;
+- a visible horizontal scrollbar;
+- an explicit "Swipe / scroll to view all 12 bays" cue;
+- automatic scrolling to keep the active bay visible.
+
+The scrolling is isolated to the selector itself rather than the full page.
+
+**What I accepted / rejected / changed and why:**
+
+I manually inspected the revised selector in both Google AI Studio's mobile
+preview and desktop preview.
+
+I accepted the correction.
+
+On mobile, the selector now clearly communicates that more bays are available,
+and the horizontal scrollbar and navigation controls allow later bays to be
+reached without creating page-level horizontal scrolling.
+
+On desktop, the same selector provides access through to BAY-12 while preserving
+the existing Screen 2 layout.
+
+This resolved the accessibility issue discovered during human verification of
+Prompt 6.
+
+---
