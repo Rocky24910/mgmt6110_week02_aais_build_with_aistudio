@@ -1218,3 +1218,6 @@ At both 375px and 430px:
 I also confirmed that the desktop layout remains unchanged.
 
 This resolved the final text-accessibility issue discovered during responsive QA.
+
+---
+
