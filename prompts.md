@@ -1187,10 +1187,34 @@ When finished, tell me:
  ```  
 
 **What came back:**
-[等待 AI Studio 回复]
+
+Google AI Studio modified only:
+
+- `/src/components/Header.tsx`
+
+It removed truncation from two mobile header labels:
+
+1. `Zone 4 Automated Tier Arrays`
+2. `Shift Handover & Facility Diagnostics • Devon Vance (Sr. Operations Tech)`
+
+The mobile-specific `truncate` / width clamp behavior was removed so both labels
+can wrap naturally on narrow screens while desktop behavior remains unchanged.
 
 **What I accepted / rejected / changed and why:**
+
 Human verification at 375px and 430px showed that two important header labels
 were still being truncated with ellipses. I therefore did not accept the mobile
 responsive work as fully complete and issued a narrow correction focused only on
 text accessibility.
+
+I accepted this correction after independent verification on the deployed Vercel
+application.
+
+At both 375px and 430px:
+- `Zone 4 Automated Tier Arrays` is fully readable;
+- the complete product subtitle is visible without ellipsis;
+- neither change creates page-level horizontal scrolling.
+
+I also confirmed that the desktop layout remains unchanged.
+
+This resolved the final text-accessibility issue discovered during responsive QA.
