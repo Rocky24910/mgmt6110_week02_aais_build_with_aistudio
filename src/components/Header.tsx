@@ -29,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({
             12 Bays Online & Telemetry Active
           </span>
           <span className="hidden sm:inline text-slate-400">|</span>
-          <span className="text-slate-300 font-medium truncate max-w-[140px] sm:max-w-none text-[11px]">
+          <span className="text-slate-300 font-medium text-[10px] sm:text-[11px] leading-tight">
             {shiftInfo.facilityZone}
           </span>
         </div>
@@ -67,7 +67,7 @@ export const Header: React.FC<HeaderProps> = ({
                 Ops v2.4
               </span>
             </div>
-            <p className="text-[11px] sm:text-xs text-slate-400 truncate">
+            <p className="text-[11px] sm:text-xs text-slate-400 leading-snug sm:leading-normal">
               Shift Handover & Facility Diagnostics • {shiftInfo.outgoingLead}
             </p>
           </div>
