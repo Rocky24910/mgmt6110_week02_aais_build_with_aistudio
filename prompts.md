@@ -1221,3 +1221,186 @@ This resolved the final text-accessibility issue discovered during responsive QA
 
 ---
 
+## Prompt 7 — Truthfulness wording correction
+ ```
+ROLE:
+You are a senior product and front-end developer working in my existing
+HydroCrop Monitor project.
+
+Do not redesign or rebuild the application.
+
+GOAL:
+Correct ONLY the product wording that currently makes prototype/mock
+hydro-bay data or front-end-only handover actions sound like real live telemetry
+or a real external notification/broadcast system.
+
+The application now contains one genuinely live external data integration:
+"Live External Conditions" from data.gov.sg / NEA.
+
+That live environmental section is truthful and must remain unchanged.
+
+However, the original Problem Set 1 interface still contains wording that implies
+the 12 hydroponic bays are connected to a real farm telemetry system and that
+handover alerts are actually broadcast or dispatched to another team.
+
+Those claims are not supported by a real farm IoT system or notification backend.
+
+Change the wording so the interface accurately describes what the product
+currently does.
+
+OUTPUT:
+
+Change ONLY user-facing wording required for truthfulness.
+
+Use these replacements or equivalent wording with the same meaning:
+
+1. Top operational status:
+
+CURRENT:
+"12 Bays Online & Telemetry Active"
+
+CHANGE TO:
+"12 Bays in Prototype Dataset"
+
+2. Screen 1 Monitored Bays status:
+
+CURRENT:
+"100% Online"
+
+CHANGE TO:
+"12 / 12 Bays Available"
+
+3. Screen 1 handover/alert status:
+
+CURRENT:
+"Alerts queue updated live"
+
+CHANGE TO:
+"Handover flag list updated in app"
+
+4. Where the application describes pH / EC bay values as real live telemetry,
+make it clear that these are prototype facility readings.
+
+Do not add a warning to every bay card.
+Use concise wording in an appropriate shared/header/context location rather than
+making the interface visually noisy.
+
+5. Screen 3 notification/broadcast wording:
+
+Where the current interface uses wording such as:
+
+"Automated Shift Handover Broadcast"
+"Automated Dispatch Ready"
+"Dispatched Alert Queue"
+"broadcasts the automated alert dispatch"
+
+replace it with truthful in-app handover language such as:
+
+"Shift Handover Summary"
+"Handover Summary Ready"
+"Handover Action Queue"
+"records the handover summary for the incoming shift"
+
+The product may say that a handover has been prepared, recorded, confirmed,
+locked, or included in the in-app handover workflow.
+
+It must NOT claim that a real external message, notification, broadcast,
+email, or dispatch was sent unless such a service actually exists.
+
+6. Preserve the real-data wording for:
+
+"Live External Conditions"
+"External Singapore Environmental Conditions"
+"Source: NEA / data.gov.sg"
+
+These are connected to the real production backend and must not be relabelled
+as mock data.
+
+7. Do not change technician-entered notes, crop names, bay IDs, pH/EC values,
+status calculations, or existing user actions.
+
+GUARDRAILS:
+
+Change wording only.
+
+Do NOT:
+- change layout;
+- change responsive behavior;
+- change colors;
+- change components except where text strings must be edited;
+- change /api/environment;
+- change /api/health;
+- change data.gov.sg integration;
+- change mockData;
+- change bay status logic;
+- change filters;
+- change inspection behavior;
+- change flagging behavior;
+- change handover state logic;
+- add a notification service;
+- add email;
+- add a database;
+- add authentication;
+- add packages.
+
+Do not create new functionality merely to justify the old wording.
+
+If a claim is not supported by the current implementation, change the claim
+instead of inventing a feature.
+
+CONTEXT:
+
+This is my existing HydroCrop Monitor project for MGMT 6110 Problem Set 2.
+
+The original Problem Set 1 application used mock data for 12 hydroponic bays.
+
+During Problem Set 2, I manually reviewed the claims made by the interface and
+identified that the existing pH, EC, water-temperature, reservoir, flow, and
+bay-status data are prototype/mock facility data.
+
+I deliberately chose NOT to connect an unrelated public API and pretend that it
+represented real hydroponic sensors.
+
+I separately added and independently verified a real backend integration for
+Singapore external temperature and relative humidity using data.gov.sg / NEA.
+
+The production endpoints:
+
+/api/health
+/api/environment
+
+have both been successfully verified on Vercel.
+
+Therefore the product now contains two clearly different data categories:
+
+1. Prototype/mock hydro-bay facility data.
+2. Genuine live external Singapore environmental data.
+
+The interface must make that distinction truthful and understandable.
+
+The application also has an in-app handover workflow, but it has no external
+notification or messaging backend. Therefore wording that says alerts were
+"broadcast", "dispatched", or sent to another team must be replaced with
+in-app handover language.
+
+When finished, report:
+
+1. Exactly which files you modified.
+2. Every user-facing phrase you changed, showing BEFORE → AFTER.
+3. Any wording you deliberately left unchanged and why.
+4. Confirm that no functionality, API logic, layout, or responsive behavior changed.
+
+Do not make any unrelated changes.
+ ```
+
+**What came back:**
+[等待 AI Studio 回复]
+
+**What I accepted / rejected / changed and why:**
+Pending human review of the revised wording.
+
+The purpose of this prompt is not to add functionality. It is to remove or
+reframe claims that the existing implementation cannot truthfully support,
+while preserving the genuinely live data.gov.sg / NEA integration.
+
+---
