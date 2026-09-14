@@ -1393,14 +1393,50 @@ When finished, report:
 Do not make any unrelated changes.
  ```
 
-**What came back:**
-[等待 AI Studio 回复]
+### What came back
 
-**What I accepted / rejected / changed and why:**
-Pending human review of the revised wording.
+The AI completed the truthfulness wording pass without changing the application’s functionality, API logic, layout, responsive behavior, or mock dataset.
 
-The purpose of this prompt is not to add functionality. It is to remove or
-reframe claims that the existing implementation cannot truthfully support,
-while preserving the genuinely live data.gov.sg / NEA integration.
+It modified:
+- `src/components/Header.tsx`
+- `src/components/ShiftHandoverOverview.tsx`
+- `src/components/BayInspectionActionForm.tsx`
+- `src/components/HandoverSummaryLogs.tsx`
+- `src/components/HandoverConfirmModal.tsx`
+- `src/App.tsx`
+
+The main changes were:
+
+- “12 Bays Online & Telemetry Active” → “12 Bays in Prototype Dataset”
+- “100% Online” → “12 / 12 Bays Available”
+- “Alerts queue updated live” → “Handover flag list updated in app”
+- Screen 1 now describes the bay values as “prototype facility” readings rather than implying that the pH/EC values are live telemetry.
+- “Select Bay to Inspect (12 Bays Automated)” → “Select Bay to Inspect (12 Prototype Bays)”
+- “Shift Trend Logs (Past 7 Hours of Dosing Telemetry)” → “Shift Trend Logs (Past 7 Hours of Prototype Dosing Readings)”
+- Flagging a bay now says that the bay is added to the incoming shift handover list rather than claiming that an automated external alert was broadcast.
+- Screen 3 wording around “broadcast,” “dispatch,” and external notification was changed to “handover summary,” “handover action queue,” and “records the handover summary.”
+- The confirmation modal was similarly changed from an “Automated Shift Handover Broadcast” to a “Shift Handover Summary.”
+- The genuine Live External Conditions section was deliberately left unchanged because it is backed by the real NEA / data.gov.sg API. It still clearly identifies itself as external Singapore environmental data and states that it is not indoor farm or hydro-bay telemetry.
+
+The AI also reported that the existing mock data, technician notes, bay workflows, external API integration, responsive behavior, and layout were preserved. Compilation and lint checks completed successfully.
+
+### What I accepted / rejected / changed and why
+
+I accepted the wording changes after reviewing the updated interface.
+
+The original prototype used language such as “telemetry active,” “100% online,” “updated live,” “broadcast,” and “dispatch,” even though the hydro-bay readings still came from the prototype dataset and the application had no external notification backend. Those phrases could therefore make claims that the product could not actually support.
+
+I accepted the revised wording because it now distinguishes the prototype hydro-bay readings from the genuinely live external environmental data supplied through the NEA / data.gov.sg backend.
+
+I deliberately did not ask the AI to connect an unrelated public API to the hydro-bay pH/EC readings merely to make them appear real. A public API would not truthfully represent sensor readings from these specific hydroponic bays. Instead, I kept the prototype dataset and changed the user-facing language so that its status is clear.
+
+I also accepted the revised handover wording because the application can record, confirm, and lock an in-app handover summary, but it cannot truthfully claim that an external alert, notification, or broadcast was sent to the incoming team.
+
+I deliberately kept the “Live External Conditions” wording unchanged because this section is actually supported by the real backend integration with NEA / data.gov.sg and is visibly separated from the prototype indoor bay readings.
+
+I verified the revised wording visually across the application and confirmed that the existing bay workflows, responsive behavior, layout, and live external API integration were preserved.
+
+Overall, I accepted the result because the revision improved the truthfulness of the product without inventing new capabilities or unnecessarily changing working functionality.
 
 ---
+
