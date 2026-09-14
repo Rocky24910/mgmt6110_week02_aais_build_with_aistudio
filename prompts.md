@@ -1125,4 +1125,10 @@ the existing Screen 2 layout.
 This resolved the accessibility issue discovered during human verification of
 Prompt 6.
 
+**Final verification:**
+
+I manually scrolled to BAY-12 in the mobile selector, selected it successfully,
+and confirmed that the inspection content updated to Bay 12. I therefore accepted
+the correction as complete.
+
 ---
