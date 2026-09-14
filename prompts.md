@@ -982,8 +982,31 @@ This prompt addresses ONLY that unresolved responsive-layout issue.
 
 **What came back:**
 
-[Waiting for Google AI Studio response]
+Google AI Studio reported responsive-layout changes across all three existing
+screens without changing the back-end integration or core workflows.
+
+The main changes included:
+
+- responsive root spacing and horizontal-overflow control;
+- a mobile-adaptive header and wrapping navigation;
+- 2-column KPI layouts on mobile;
+- responsive Live External Conditions cards;
+- more flexible hydro-bay cards;
+- a 2-column telemetry layout on Screen 2;
+- a horizontally scrollable 7-hour trend table;
+- touch-friendly form controls and priority selectors;
+- responsive Screen 3 logs and flagged-bay items;
+- mobile stacking of the Screen 3 action group and confirmation modal.
+
+Google AI Studio stated that desktop styling and workflows were preserved.
 
 **What I accepted / rejected / changed and why:**
 
-[To be completed after real mobile verification]
+Pending real viewport verification.
+
+I did not accept the responsive work as complete based only on the AI Studio
+report. I will independently inspect the application at approximately 375px,
+430px, and desktop width before deciding whether the changes meet the requirement.
+
+I will specifically check whether `overflow-x-hidden` is merely hiding content
+that still overflows the viewport.
