@@ -1132,3 +1132,65 @@ and confirmed that the inspection content updated to Bay 12. I therefore accepte
 the correction as complete.
 
 ---
+
+## Prompt 6B — Header text accessibility correction
+ ```
+Human verification at 375px and 430px found two remaining responsive text-accessibility issues.
+
+1. In the top operational ticker, the text:
+   "Zone 4 Automated Tier Arrays"
+   is truncated with an ellipsis.
+
+2. In the main product header, the subtitle:
+   "Shift Handover & Facility Diagnostics • Devon Vance (Sr. Operations Tech)"
+   is also truncated and cannot be fully read on narrow screens.
+
+Fix ONLY these two text-accessibility issues.
+
+REQUIREMENTS:
+
+1. Do not use truncation or ellipsis for these two important labels on mobile.
+
+2. At narrow widths:
+   - allow "Zone 4 Automated Tier Arrays" to wrap naturally if needed;
+   - allow the full product subtitle to wrap onto an additional line if needed.
+
+3. Keep the header compact and readable.
+   Do not create horizontal page scrolling.
+
+4. Preserve the existing desktop layout and styling.
+
+5. Do not change:
+   - navigation
+   - buttons
+   - colors
+   - logo
+   - API code
+   - Screen 1 content
+   - Screen 2 selector
+   - Screen 3
+   - business logic
+   - any wording
+
+6. Verify at:
+   - 375px
+   - 430px
+   - desktop width
+
+The full text must remain readable at 375px and 430px.
+
+When finished, tell me:
+1. Which file(s) you changed.
+2. Which responsive classes/styles were changed.
+3. How the two labels behave at 375px and 430px.
+4. Whether desktop layout changed.
+ ```  
+
+**What came back:**
+[等待 AI Studio 回复]
+
+**What I accepted / rejected / changed and why:**
+Human verification at 375px and 430px showed that two important header labels
+were still being truncated with ellipses. I therefore did not accept the mobile
+responsive work as fully complete and issued a narrow correction focused only on
+text accessibility.
